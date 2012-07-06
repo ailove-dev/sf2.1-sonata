@@ -1,0 +1,76 @@
+{
+    "name": "sonata-project/sandbox",
+    
+    "description": "The Sandbox for the Sonata environment",
+    
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    
+    "require": {
+        "php": ">=5.3.3",
+        
+        "doctrine/doctrine-bundle": "dev-master",
+        
+        "twig/extensions": "dev-master",
+        
+        "symfony/assetic-bundle": "dev-master",
+        "symfony/swiftmailer-bundle": "dev-master",
+        "symfony/monolog-bundle": "dev-master",
+        
+        "sensio/distribution-bundle": "dev-master",
+        "sensio/framework-extra-bundle": "dev-master",
+        "sensio/generator-bundle": "dev-master",
+        
+        "jms/security-extra-bundle": "1.1.*",
+        "jms/di-extra-bundle": "1.0.*",
+                
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        
+        "liip/imagine-bundle": "dev-master",
+        
+        "knplabs/gaufrette": "dev-master",
+        
+        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "sonata-project/block-bundle": "dev-master",
+        "sonata-project/user-bundle": "dev-master",
+        "sonata-project/intl-bundle": "dev-master",
+        "sonata-project/seo-bundle": "dev-master",
+        "sonata-project/notification-bundle": "dev-master",
+        "sonata-project/doctrine-extensions": "dev-master",
+        "sonata-project/exporter": "dev-master",
+        "sonata-project/media-bundle": "dev-master",
+        
+        "friendsofsymfony/user-bundle": "dev-master",
+        
+        "kriswallsmith/buzz": "dev-master",
+
+        "behat/behat": "2.3.*",
+        "behat/gherkin": "2.1.*",
+        "behat/mink": "1.3.*",
+        "behat/behat-bundle": "dev-master",
+        "behat/mink-bundle": "dev-master"
+    },
+    
+    "scripts": {
+        "post-install-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+        ],
+        "post-update-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+        ]
+    },
+    
+    "config": {
+        "bin-dir": "bin"
+    },
+    
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "htdocs"
+    }
+}

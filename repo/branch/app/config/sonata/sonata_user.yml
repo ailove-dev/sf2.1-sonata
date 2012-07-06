@@ -1,0 +1,6 @@
+#
+# more information can be found here http://sonata-project.org/bundles/user
+#
+sonata_user:
+    table:
+        user_group: users_groups

@@ -1,0 +1,38 @@
+.cke_skin_kama table{
+    width: inherit;
+    margin: inherit;
+}
+.cke_skin_kama input, .cke_skin_kama textarea, .cke_skin_kama select{
+    width: inherit;
+    -webkit-transition: none;
+    -moz-transition:  none;
+    -ms-transition:  none;
+    -o-transition:  none;
+    transition:  none;
+    -webkit-box-shadow:  none;
+    -moz-box-shadow:  none;
+    box-shadow:  none;
+}
+.cke_skin_kama label{
+    padding-top: inherit;
+    line-height: inherit;
+    float: inherit;
+    width: inherit;
+    color: inherit;
+    text-align: inherit;
+}
+.cke_skin_kama table td{
+    border-top: none;
+}
+.cke_skin_kama table th, .cke_skin_kama table td{
+    padding: 0px;
+    line-height: inherit;
+}
+.cke_skin_kama select{
+    height: inherit;
+}
+.cke_skin_kama input, .cke_skin_kama textarea{
+    display: inherit;
+    border-radius: 0px;
+    line-height: inherit;
+}

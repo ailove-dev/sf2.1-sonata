@@ -1,0 +1,19 @@
+.sonata-ba-list-actions select[name="action"], .action select[name="action"] { 
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+.sonata-ba-list-actions label, .action label  { 
+    display: inline-block;
+    margin-right: 10px;
+}
+.sonata-ba-list-actions label input[type="checkbox"], .action label input[type="checkbox"]{ 
+    display: inline-block;
+}
+.sonata-bc .navbar a.brand {
+    font-size: 16px;
+    margin-right: 30px;
+}
+.sonata-bc .filter_container table{
+    width: auto;
+}

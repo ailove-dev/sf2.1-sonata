@@ -1,0 +1,120 @@
+#
+# more information can be found here http://sonata-project.org/bundles/media
+#
+parameters:
+    # Sonata Admin Options
+    sonata_media.cdn.host: /data/uploads/media
+    
+sonata_media:
+    db_driver:       doctrine_orm # | doctrine_mongodb
+    default_context: files
+    contexts:
+        files:
+            providers:
+#                - sonata.media.provider.dailymotion
+#                - sonata.media.provider.youtube
+#                - sonata.media.provider.image
+                - sonata.media.provider.file
+#                - sonata.media.provider.vimeo
+
+            formats: ~
+
+    cdn:
+        # define the public base url for the uploaded media
+        server:
+            path:      %sonata_media.cdn.host%
+
+    filesystem:
+        # define where the uploaded file will be stored
+        local:
+            directory:  %kernel.root_dir%/../../../data/uploads/media
+            create:     true
+
+    providers:
+        file:
+            resizer:    false
+            allowed_extensions:
+              - pdf
+              - txt
+              - rtf
+              - doc
+              - docx
+              - xls
+              - xlsx
+              - ppt
+              - pttx
+              - odt
+              - odg
+              - odp
+              - ods
+              - odc
+              - odf
+              - odb
+              - csv
+              - xml
+              - zip
+              - gz
+            allowed_mime_types: 
+              - application/pdf
+              - application/x-pdf
+              - application/rtf
+              - text/html
+              - text/rtf
+              - text/plain
+              - application/excel
+              - application/msword
+              - application/vnd.ms-office
+              - application/vnd.ms-excel
+              - application/vnd.ms-powerpoint
+              - application/vnd.ms-powerpoint
+              - application/vnd.oasis.opendocument.text
+              - application/vnd.oasis.opendocument.graphics
+              - application/vnd.oasis.opendocument.presentation
+              - application/vnd.oasis.opendocument.spreadsheet
+              - application/vnd.oasis.opendocument.chart
+              - application/vnd.oasis.opendocument.formula
+              - application/vnd.oasis.opendocument.database
+              - application/vnd.oasis.opendocument.image
+              - text/comma-separated-values
+              - text/xml
+              - application/xml
+              - application/zip
+              - application/x-gzip
+
+    pixlr:
+        enabled:  false
+        referrer: Demo - Sonata Project
+
+    resizer:
+        simple:
+#            mode:  outbound
+            mode:  inset
+
+#
+# The LiipImagineBundle can be used if you want to convert on demand an image
+# to a specific format. (ie a controller render the file)
+#    more information can be found here : https://github.com/liip/LiipImagineBundle
+#
+#liip_imagine:
+#    filter_sets:
+#        default_small:
+#            quality: 75
+#            controller_action: 'SonataMediaBundle:Media:liipImagineFilter'
+#            filters:
+#                thumbnail: { size: [100, 70], mode: outbound }
+#
+#
+#        default_big:
+#            quality: 75
+#            controller_action: 'SonataMediaBundle:Media:liipImagineFilter'
+#            filters:
+#                thumbnail: { size: [500, 70], mode: outbound }
+
+# Enable Doctrine to map the provided entities
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                mappings:
+                    ApplicationSonataMediaBundle: ~
+                    SonataMediaBundle: ~

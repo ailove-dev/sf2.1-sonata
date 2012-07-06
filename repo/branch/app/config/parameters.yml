@@ -1,0 +1,17 @@
+imports:
+    - { resource: factory.php }
+parameters:
+    database_driver: pdo_pgsql
+    database_host: %DB_HOST%
+    database_port: %DB_PORT%
+    database_name: %DB_NAME%
+    database_user: %DB_USER%
+    database_password: %DB_PASSWORD%
+    mailer_transport: smtp
+    mailer_encryption: ssl
+    mailer_auth_mode: login
+    mailer_host: ___
+    mailer_user: ___
+    mailer_password: ___
+    locale: ru
+    secret: 45818125e199126a331d28e48a98f9e7
