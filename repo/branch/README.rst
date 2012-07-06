@@ -50,12 +50,10 @@ Run the following commands::
     git clone https://github.com/ailove-dev/sf2.1-sonata.git project
     cd project
     rm -rf .git
-    git init
-    git add .gitignore *
-    git commit -m "Initial commit"
     php bin/vendors install
-    git add *
-    git commit -m "add submodules"
+    git init
+    git add .
+    git commit -m "Initial commit"
 
 .. note::
 
@@ -79,7 +77,7 @@ For create schema run the command::
 Add admin user
 ~~~~~~~~~~~~~~
 
-Run the commands::
+Run the command::
 
     app/console fos:user:create admin admin@ailove.ru admin --super-admin
 
