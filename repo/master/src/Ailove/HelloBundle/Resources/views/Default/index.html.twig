@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/hello/css/style.css') }}" type="text/css" />
+{% endblock %}
+{% block title %}Ailove world!{% endblock %}
+{% block body %}
+<div class="ailove-world">
+    <img src="{{ asset('bundles/hello/images/logo.png') }}"/>
+    <h1>Ailove world!</h1>
+</div>
+{% endblock %}

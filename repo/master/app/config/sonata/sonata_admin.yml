@@ -3,8 +3,8 @@
 #
 parameters:    
     # Sonata Admin Options
-    sonata_admin.title:             Emailing System
-    sonata_admin.logo_title:        /img/admin/visa.png
+    sonata_admin.title:             Sonata Admin
+    sonata_admin.logo_title:        /bundles/sonataadmin/logo_title.png
     
 sonata_admin:
     # default value, change it to sonata.admin.security.handler.acl to use ACL
@@ -28,9 +28,7 @@ sonata_admin:
     dashboard:
         blocks:
             - { position: left, type: sonata.admin.block.admin_list }
-#            - { position: right, type: sonata.admin_doctrine_orm.block.audit}
-            - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Добро пожаловать!</h2><br/><p>Панель управления предоставляет возможность:</p><ul><li>управлять рассылками</li><li>управлять списком получателей</li><li>управлять группами получателей</li><li>просматривать статистику</li></ul>"} }
-#            - { position: right, type: sonata.block.service.rss, settings: { title: Sonata Project's Feeds, url: http://sonata-project.org/blog/archive.rss }}
+            - { position: right, type: sonata.block.service.rss, settings: { title: Sonata Project's Feeds, url: http://sonata-project.org/blog/archive.rss }}
 
 sonata_doctrine_orm_admin:
     entity_manager: ~

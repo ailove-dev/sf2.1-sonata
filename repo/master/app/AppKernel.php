@@ -9,6 +9,7 @@ class AppKernel extends Kernel
     {
         // Please read http://symfony.com/doc/2.0/book/installation.html#configuration-and-setup
         umask(0002);
+        ini_set('date.timezone', 'Europe/Moscow');
 
         parent::init();
     }
@@ -58,6 +59,8 @@ class AppKernel extends Kernel
             
             // SONATA ADMIN THEME
             new Application\Sonata\AdminThemeBundle\AdminThemeBundle(),
+
+            new Ailove\HelloBundle\HelloBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -81,11 +84,17 @@ class AppKernel extends Kernel
     
     public function getCacheDir()
     {
-        return realpath($this->rootDir . '/../../../cache/') . '/' . $this->environment;
+        return realpath($this->rootDir . '/../../../cache/') . '/' . $this->getEnvHost() . '/' . $this->environment;
     }
-    
+
     public function getLogDir()
     {
-        return realpath($this->rootDir.'/../../../tmp/') . '/logs';
-    }    
+        return realpath($this->rootDir.'/../../../tmp/') . '/' .  $this->getEnvHost() . '/logs';
+    }
+
+    private function getEnvHost()
+    {
+        return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'cli';
+    }
+
 }
