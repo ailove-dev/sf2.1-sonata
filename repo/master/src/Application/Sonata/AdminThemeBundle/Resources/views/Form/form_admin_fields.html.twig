@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 {% extends 'SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig' %}
 
+{#
 {% block sonata_admin_orm_many_to_one_widget %}
     {% include 'AdminThemeBundle:CRUD:edit_orm_many_to_one.html.twig' %}
 {% endblock %}
@@ -18,3 +19,8 @@ file that was distributed with this source code.
 {% block sonata_admin_orm_one_to_many_widget %}
     {% include 'AdminThemeBundle:CRUD:edit_orm_one_to_many.html.twig' %}
 {% endblock %}
+
+{% block sonata_admin_orm_many_to_many_widget %}
+    {% include 'AdminThemeBundle:CRUD:edit_orm_many_to_many.html.twig' %}
+{% endblock %}
+#}

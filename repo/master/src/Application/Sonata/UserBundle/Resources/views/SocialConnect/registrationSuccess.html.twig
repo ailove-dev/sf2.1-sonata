@@ -1,0 +1,19 @@
+{% extends ":Story:base.html.twig" %}
+
+{% block maincontent %}
+
+    <div style="margin-top: 100px;">
+        <h3 class="h3 green">Регистрация завершена</h3>
+    </div>
+
+{% endblock maincontent %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('a.close').click(function(){
+                document.location.href = '{{ path('StoryBundle_homepage') }}';
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,4 @@
+Application\Sonata\UserBundle\Entity\User:
+    properties:
+        username:
+            - NotBlank: { message: Хуевый логин. }

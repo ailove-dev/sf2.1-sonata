@@ -1,3 +1,7 @@
+ApplicationSonataUserBundle_user_routes:
+    resource: "@ApplicationSonataUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 HelloBundle:
     resource: "@HelloBundle/Resources/config/routing.yml"
     prefix:   /
@@ -42,9 +46,9 @@ sonata_media_pixlr:
     resource: '@SonataMediaBundle/Resources/config/routing/pixlr.xml'
     prefix: /admin/media
 
-#_imagine:
-#    resource: .
-#    type:     imagine
+_imagine:
+    resource: .
+    type:     imagine
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'

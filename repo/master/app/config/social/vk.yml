@@ -1,0 +1,13 @@
+# 
+# more information can be found here http://sonata-project.org/bundles/user
+#
+vk:
+    app_id: %VK_APP_ID%
+    app_secret: %VK_APP_SECRET%
+    access_token_url: 'https://oauth.vkontakte.ru/access_token'
+    dialog_url: 'http://oauth.vk.com/oauth/authorize'
+    redirect_uri: %VK_REDIRECT_URI%
+    scope: 'friends,groups'
+    oauth_proxy_class: Ailove\VKBundle\Service\VKOauthSessionProxy
+    oauth_proxy_file: %kernel.root_dir%/../src/vk-php-sdk/classes/Oauth2Proxy.php
+    sdk_file: %kernel.root_dir%/../src/vk-php-sdk/classes/VkPhpSdk.php

@@ -1,0 +1,96 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends base_template %}
+
+{% block title %}Сводная статистика рассылок{% endblock %}
+
+{% block breadcrumb %}
+        <li><a href="{{ path('sonata_admin_dashboard') }}">⌂</a><span class="divider">/</span></li>
+        <li class="active">Сводная статистика рассылок</li>
+{% endblock %}
+
+{% block actions %}{% endblock %}
+
+{% block side_menu %}{% endblock %}
+
+{% block list_table %}
+            <table class="table table-bordered table-striped">
+{% block table_header %}
+                    <thead>
+                        <tr class="sonata-ba-list-field-header">
+                            <th class="sonata-ba-list-field-header-1">Дата рассылки</th>
+                            <th class="sonata-ba-list-field-header-2">Сообщение</th>
+                            <th class="sonata-ba-list-field-header-2">В очереди</th>
+                            <th class="sonata-ba-list-field-header-2">Отправленных</th>
+                            <th class="sonata-ba-list-field-header-2">Доставленных</th>
+                            <th class="sonata-ba-list-field-header-2">% дост. от отпр.</th>
+                            <th class="sonata-ba-list-field-header-2">Не доставленных</th>
+                            <th class="sonata-ba-list-field-header-2">Открытых</th>
+                            <th class="sonata-ba-list-field-header-2">% откр. от дост.</th>
+                        </tr>
+                    </thead>
+                {% endblock %}
+
+                {% block table_body %}
+                    <tbody>
+                        {% for newsletter in stat %}
+                            <tr>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-add-queue-at">{{ newsletter.add_queue_at }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-subject"><a target="_blank" href="{{ path('admin_ailove_newsletter_message_edit', { 'id': newsletter.message_id })}}">{{ newsletter.subject }}</a></td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-cnt-spool">{{ newsletter.cnt_spool }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-cnt-sent">{{ newsletter.cnt_sent }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-cnt-delivery">{{ newsletter.cnt_delivery }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-cnt-delivery">{{ newsletter.cnt_sent ? ((newsletter.cnt_delivery/newsletter.cnt_sent) * 100)|number_format(2) : 0 }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-cnt-undelivered">{{ newsletter.cnt_undelivered }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-cnt-open">{{ newsletter.cnt_open }}</td>
+                                <td class="sonata-ba-list-field sonata-ba-list-field-cnt-open">{{ newsletter.cnt_delivery ? ((newsletter.cnt_open/newsletter.cnt_delivery) * 100)|number_format(2) : 0 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endblock %}
+                    
+                {% block table_footer %}
+                    {#<tr>
+                        <th colspan="{{ admin.list.elements|length - 1 }}">
+                            {{ admin.datagrid.pager.page }} / {{ admin.datagrid.pager.lastpage }}
+                            {% if admin.isGranted("EXPORT") %}
+                                -
+                                {{ "label_export_download"|trans({}, "SonataAdminBundle") }}
+                                {% for format in admin.getExportFormats() %}
+                                    <a href="{{ admin.generateUrl('export', admin.modelmanager.paginationparameters(admin.datagrid, 0) + {'format' : format}) }}">{{ format }}</a>{% if not loop.last%},{% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </th>
+
+                        <th>
+                            {% transchoice admin.datagrid.pager.nbresults with {'%count%': admin.datagrid.pager.nbresults} from 'SonataAdminBundle' %}list_results_count{% endtranschoice %}
+                        </th>
+                    </tr>#}
+
+                        <tr>
+                            <td colspan="9">
+
+                                <div class="pagination">
+                                    <ul>
+                                            <li><a href="#" title="#">1</a></li>
+                                            <li><a href="#" title="#">2</a></li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                {% endblock %}
+            </table>
+{% endblock %}
+
+{% block list_filters %}{% endblock %}
+

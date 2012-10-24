@@ -32,7 +32,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
 
-
             // KNP HELPER BUNDLES
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
@@ -44,7 +43,7 @@ class AppKernel extends Kernel
             // MEDIA
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
-            // new Liip\ImagineBundle\LiipImagineBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
 
             // SONATA CORE & HELPER BUNDLES
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
@@ -60,7 +59,11 @@ class AppKernel extends Kernel
             // SONATA ADMIN THEME
             new Application\Sonata\AdminThemeBundle\AdminThemeBundle(),
 
+            // AILOVE
             new Ailove\HelloBundle\HelloBundle(),
+            new Ailove\OKBundle\OKBundle(),
+            new Ailove\VKBundle\VKBundle(),
+            new Ailove\VKApiHelperBundle\VKApiHelperBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

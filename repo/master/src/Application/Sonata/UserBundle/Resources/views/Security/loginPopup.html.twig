@@ -1,0 +1,16 @@
+<div class="popup_socialauth_pass">
+    <form id="login_form" action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+        <input id="username" class="login_email" type="text" name="_username" value="{{ last_username }}" placeholder="Email" style="margin-right:15px">
+
+        <input class="login_pass" type="password" id="password" name="_password" placeholder="Пароль">
+    {#
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+    #}
+        <input class="login_submit" id="login_submit" type="image" id="_submit" name="_submit" src="{{ asset('img/mainpage/reg_login_submit.png') }}"/>
+    </form>
+    <p class="error" style="color: red; font-size: 11px; margin-left: 5px; margin-top: 5px;">&nbsp;</p>
+    <p><a id="reg_open" class="popup_reg_link" href="{{ url('fos_user_registration_register') }}">Зарегистрироваться</a></p>
+</div>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="ru" datatype="plaintext" original="SonataAdminBundle.en.xliff" >
+        <body>
+            <trans-unit id="stories">
+                <source>stories</source>
+                <target>Истории</target>
+            </trans-unit>                                                      
+            <trans-unit id="notices">
+                <source>notices</source>
+                <target>Уведомления</target>
+            </trans-unit>                                                      
+            <trans-unit id="sonata_media">
+                <source>sonata_media</source>
+                <target>Мультимедиа</target>
+            </trans-unit>   
+            <trans-unit id="sonata_user">
+                <source>sonata_user</source>
+                <target>Пользователи</target>
+            </trans-unit>
+            <trans-unit id="Dashboard">
+                <source>Dashboard</source>
+                <target>⌂</target>
+            </trans-unit>
+            <trans-unit id="label_export_download">
+                <source>label_export_download</source>
+                <target>Экспортировать:</target>
+            </trans-unit>  
+        </body>
+    </file>
+</xliff>

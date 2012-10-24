@@ -1,0 +1,42 @@
+{% extends ':Story:base.html.twig' %}
+
+{% block maincontent %}
+{% if error %}
+    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+{% endif %}
+<div class="maincontent auth_before_maincontent">
+        <div class="basic">
+                <div class="auth_before">
+                        <div class="auth_before_intro">
+                                <p class="hh">Настоящая любовь — что мы знаем о ней?</p>
+                                <p class="txt"> Была ли это первая школьная любовь или пришедшая с годами?<br />
+У каждого своя неповторимая история. </p>
+                                <p class="txt">Новый проект «Настоящая любовь», подготовленный для Вас совместно
+ТМ&nbsp;«Любимый» и СТС Медиа – создан для того, чтобы собрать истории о&nbsp;настоящей&nbsp;любви людей разного пола и возраста из разных городов России.<br />А вы чувствовали когда-нибудь настоящую любовь?<br />Расскажите нам об этом!</p>
+                        </div>
+                        <div class="auth_before_columns clearfix">
+                                <form action="{{ path("fos_user_security_check") }}" method="post">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                                    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                                    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+                                    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                                    <input type="password" id="password" name="_password" />
+
+                                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                                    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+
+                                    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+                                </form>
+                        </div>
+                </div>
+        </div>
+</div>
+{% endblock maincontent %}
+    
+
+{% block javascripts_head %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/mainpage.js') }}"></script>
+{% endblock %}

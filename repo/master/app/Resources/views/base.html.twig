@@ -5,8 +5,25 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        {% block javascripts_head %}{% endblock %}
     </head>
     <body>
+         {% block user_profile %}
+             {% if is_granted('ROLE_REGISTERED') %}
+                 {% set authUser = app.user %}
+                 <div>
+                     <div>
+                         <div>Имя: <span>{{ authUser.firstname ~ ' ' ~ authUser.lastname}}</span></div>
+                                                                     
+                         <div><a href="{{ path('fos_user_security_logout') }}">Выход</a></div>
+                         <div><img width="48" alt="" src="{{ authUser.photo ? media_path(authUser.photo, 'profile_block') : asset('img/face.png')}}"></div>
+                     </div>
+                 </div>
+            {% else %}
+                <a href="{{ path('_vkontakte_login') }}">VK</a> | <a href="{{ path('_ok_login') }}">OK</a>
+            {% endif %}
+        {% endblock %}
+
         {% block body %}{% endblock %}
         {% block content %}{% endblock %}
         {% block javascripts %}{% endblock %}

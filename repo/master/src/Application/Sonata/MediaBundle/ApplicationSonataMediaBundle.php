@@ -18,8 +18,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  *
  * References :
  *   bundles : http://symfony.com/doc/current/book/bundles.html
- *
- * @author <yourname> <youremail>
  */
 class ApplicationSonataMediaBundle extends Bundle
 {

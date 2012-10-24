@@ -1,0 +1,22 @@
+{#
+
+This file is part of the "AiloveOliport" package.
+
+Copyright Ailove company <info@ailove.ru>
+
+#}
+
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <form method="post" action="{{ path('_social_connect') }}" {{ form_enctype(form) }} novalidate="novalidate" style="margin-top: 100px;">
+        <span style="color: red; font-weight: bold;">{{ form_errors(form) }}</span>
+        <label for="connect_register_email">Для окончания регистрации введите ваш адрес электронной почты:</label>
+        <div style="color: red; font-weight: bold;">{{ form_errors(form.email) }}</div>
+        <span class="field">{{ form_widget(form.email) }}</span>
+        {{ form_rest(form) }}
+        <button type="submit" class="btn"><span>Завершить регистрацию</span></button>
+    </form>
+
+{% endblock body %}

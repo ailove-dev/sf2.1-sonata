@@ -1,0 +1,33 @@
+parameters:
+#    vk.example.class: Ailove\VKBundle\Example
+
+services:
+    vk.user.manager:
+        class: Application\Sonata\UserBundle\Entity\Manager\UserManager
+        arguments: [ '@security.encoder_factory', '@fos_user.util.username_canonicalizer', '@fos_user.util.email_canonicalizer', '@fos_user.entity_manager', %fos_user.model.user.class%, '@service_container' ]
+  # logging codes   
+    firstlove.security.interactive_login_listener:
+        class: Application\Sonata\UserBundle\Security\InteractiveLoginListener
+        arguments: ["@fos_user.user_manager"]
+        tags:
+          - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin, priority: 1 }
+    firstlove.security.authentication_handler:
+        class: Application\Sonata\UserBundle\Security\AuthenticationHandler
+        arguments: ["@router"]
+    firstlove.registration_form_type:
+        class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
+        arguments: [ %fos_user.model.user.class% ]
+        tags:
+          - { name: form.type, alias: firstlove_registration_form_type }
+    firstlove.registration_form_handler:
+        class: Application\Sonata\UserBundle\Form\Handler\RegistrationFormHandler
+        arguments: [ "@fos_user.registration.form", "@request=", "@fos_user.user_manager", "@fos_user.mailer", "@fos_user.util.token_generator" ]
+    monolog.user_connect:
+        class: Symfony\Bridge\Monolog\Logger
+        arguments: ['code']
+        calls:
+          - [ pushHandler, [ '@monolog.user_connect_handler' ] ]    
+    monolog.user_connect_handler:
+        class: Monolog\Handler\StreamHandler
+        # 200 = INFO, see Monolog::Logger for the values of log levels
+        arguments: [%kernel.logs_dir%/%kernel.environment%_user_connect.log, 200]   

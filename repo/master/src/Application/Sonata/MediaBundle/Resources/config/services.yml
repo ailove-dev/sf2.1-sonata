@@ -1,0 +1,14 @@
+parameters:
+
+services:
+#   sonata.media.resizer.advanced:
+#      class: Application\Sonata\MediaBundle\Media\AdvancedResizer
+#      arguments: ["@sonata.media.adapter.image.gd", "inset"]  
+   sonata.media.twig.extension.web_path:
+      class: Application\Sonata\MediaBundle\Twig\Extension\MediaPathExtension
+      arguments: ["@sonata.media.pool", "@sonata.media.manager.media", "@service_container" ]
+      tags: 
+          - { name: twig.extension }      
+   sonata.media.thumbnail.advanced.liip_imagine:
+      class: Application\Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail
+      arguments: [ "@router" ]

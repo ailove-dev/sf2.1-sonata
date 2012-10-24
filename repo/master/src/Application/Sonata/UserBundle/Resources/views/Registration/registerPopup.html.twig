@@ -1,0 +1,59 @@
+{% form_theme form 'ApplicationSonataUserBundle:Form:fields.html.twig' %}
+
+<form id="register_form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    <div class="popup_registar_intro">Регистрация</div>
+    <div class="popup_registar_blocks clearfix">
+            <div class="popup_registar_blocks_left floatleft">
+                    <div class="popup_registar_blocks_name">
+                            <span>{{ form_label(form.firstName) }}</span><br />
+                            {{ form_widget(form.firstName, { 'attr' : { 'placeholder' : 'Евгений' } } ) }}
+                    </div>
+                    <div class="popup_registar_blocks_date_pre">
+                            {{ form_label(form.dateOfBirth) }}
+                    </div>
+                    <div class="popup_registar_blocks_date clearfix">
+                            <div class="popup_registar_blocks_date_one floatleft">
+                                    {{ form_widget(form.dateOfBirth.day) }}
+                            </div>
+                            <div class="popup_registar_blocks_date_two floatleft">
+                                    {{ form_widget(form.dateOfBirth.month) }}
+                            </div>
+                            <div class="popup_registar_blocks_date_three floatleft">
+                                    {{ form_widget(form.dateOfBirth.year) }}
+                            </div>
+                    </div>
+                    <div class="popup_registar_blocks_email">
+                            <span>{{ form_label(form.email) }}</span><br />
+                            {{ form_widget(form.email, { 'attr' : { 'placeholder' : 'email@mail.ru' } } ) }}
+                    </div>
+                    <div class="popup_registar_blocks_password">
+                            <span>{{ form_label(form.plainPassword) }}</span><br />
+                            {{ form_widget(form.plainPassword.first) }}
+                    </div>
+            </div>
+
+            <div class="popup_registar_blocks_right floatleft">
+                    <div class="popup_registar_blocks_surname">
+                            <span>{{ form_label(form.lastName) }}</span><br />
+                            {{ form_widget(form.lastName, { 'attr' : { 'placeholder' : 'Онегин' } } ) }}
+                    </div>
+                    <div class="popup_registar_blocks_city">
+                            <span>{{ form_label(form.cityText) }}</span><br />
+                            {{ form_widget(form.cityText, { 'attr' : { 'placeholder' : 'Москва' } } ) }}
+                    </div>
+                    <div class="popup_registar_blocks_passwordagain">
+                            <span>Повторить пароль</span><br />
+                            {{ form_widget(form.plainPassword.second) }}
+                    </div>					
+            </div>
+    </div>
+    <p class="error" style="color: red; font-size: 11px; margin-left: 5px; margin-top: 5px;">&nbsp;</p>
+    {{ form_rest(form) }}
+    <div class="popup_registar_blocks_rules">
+        <div class="popup_registar_blocks_rules_box"><input type="checkbox" value="" />Подтверждаю, что согласен с <a target="_blank" href="/pdf/rules_contest.pdf">правилами</a></div>
+    </div>
+
+    <div class="popup_registar_blocks_submit">
+            <input id="register_submit" type="image" src="{{ asset('img/mainpage/registar.png') }}" value="" />
+    </div>
+</form>

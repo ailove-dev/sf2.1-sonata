@@ -1,0 +1,9 @@
+{% autoescape false %}
+<html>
+    <head></head>
+    <body>
+        Cоциальный аккаунт "{{ socialUid }} - {{ social == 'ok' ? 'odnoklassniki.ru' : 'vk.com'}}" связан с аккаунтом сайта "{{ email }}".<br/><br/>
+        Теперь вы можете авторизовываться на сайте с помощью вашего социального профиля!
+    </body>
+</html>
+{% endautoescape %}

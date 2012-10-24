@@ -1,0 +1,10 @@
+{% autoescape false %}
+<html>
+    <head></head>
+    <body>
+        Если вы не совершали ни каких действий на сайте <a href="http://real-love.videomore.ru/">http://real-love.videomore.ru</a>, проигнорируйте это сообщение.<br/><br/>
+        Для того чтобы связать ваш социальный аккаунт "{{ socialUid }} - {{ social == 'ok' ? 'odnoklassniki.ru' : 'vk.com'}}" с аккаунтом сайта "{{ email }}" перейдите по ссылке:<br/>
+        <a href="{{ url('_social_confirm_bind', { 'token' : token, 'social': social, 'socialUid' : socialUid }) }}">{{ url('_social_confirm_bind', { 'token' : token, 'social': social, 'socialUid' : socialUid }) }}</a>.
+    </body>
+</html>
+{% endautoescape %}

@@ -1,0 +1,41 @@
+{#
+
+This file is part of the "AiloveOliport" package.
+
+Copyright Ailove company <info@ailove.ru>
+
+#}
+
+<script type="text/javascript">
+    function goLogIn(){
+        window.location = "{{ path('_security_check') }}";
+    }
+
+    function onFbInit() {
+        //console.log('onFbInit');
+        if (typeof(FB) != 'undefined' && FB != null ) {
+            FB.Event.subscribe('auth.statusChange', function(response) {
+                if (response.session || response.authResponse) {
+                    setTimeout(goLogIn, 500);
+                } else {
+                    window.location = "{{ path('_security_logout') }}";
+                }
+            });
+        }
+    }
+
+    function fbLogin() {
+        //console.log('fbLogin');
+        if (typeof(FB) != 'undefined' && FB != null ) {
+            //console.log('FB defined');
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    //console.log('Welcome!  Fetching your information.... ');
+                    setTimeout(goLogIn, 500);
+                } else {
+                    //console.log('User cancelled login or did not fully authorize.');
+                }
+            }, {});
+        }
+    }
+</script>

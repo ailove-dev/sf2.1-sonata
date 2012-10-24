@@ -4,19 +4,21 @@
 parameters:
     # Sonata Admin Options
     sonata_media.cdn.host: /data/uploads/media
+    sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\MediaAdmin
+    sonata.media.admin.gallery.class: Application\Sonata\MediaBundle\Admin\GalleryAdmin
     
 sonata_media:
     db_driver:       doctrine_orm # | doctrine_mongodb
-    default_context: files
+    default_context: story
     contexts:
-        files:
+        story:
             providers:
-#                - sonata.media.provider.dailymotion
-#                - sonata.media.provider.youtube
-#                - sonata.media.provider.image
-                - sonata.media.provider.file
-#                - sonata.media.provider.vimeo
+                - sonata.media.provider.image
+            formats: ~
 
+        avatar:
+            providers:
+                - sonata.media.provider.image
             formats: ~
 
     cdn:
@@ -33,61 +35,14 @@ sonata_media:
     providers:
         file:
             resizer:    false
-            allowed_extensions:
-              - pdf
-              - txt
-              - rtf
-              - doc
-              - docx
-              - xls
-              - xlsx
-              - ppt
-              - pttx
-              - odt
-              - odg
-              - odp
-              - ods
-              - odc
-              - odf
-              - odb
-              - csv
-              - xml
-              - zip
-              - gz
-            allowed_mime_types: 
-              - application/pdf
-              - application/x-pdf
-              - application/rtf
-              - text/html
-              - text/rtf
-              - text/plain
-              - application/excel
-              - application/msword
-              - application/vnd.ms-office
-              - application/vnd.ms-excel
-              - application/vnd.ms-powerpoint
-              - application/vnd.ms-powerpoint
-              - application/vnd.oasis.opendocument.text
-              - application/vnd.oasis.opendocument.graphics
-              - application/vnd.oasis.opendocument.presentation
-              - application/vnd.oasis.opendocument.spreadsheet
-              - application/vnd.oasis.opendocument.chart
-              - application/vnd.oasis.opendocument.formula
-              - application/vnd.oasis.opendocument.database
-              - application/vnd.oasis.opendocument.image
-              - text/comma-separated-values
-              - text/xml
-              - application/xml
-              - application/zip
-              - application/x-gzip
-
-    pixlr:
-        enabled:  false
-        referrer: Demo - Sonata Project
+        image:
+            filesystem: sonata.media.filesystem.local
+            cdn:        sonata.media.cdn.server
+            generator:  sonata.media.generator.default
+            thumbnail:  sonata.media.thumbnail.advanced.liip_imagine
 
     resizer:
         simple:
-#            mode:  outbound
             mode:  inset
 
 #
@@ -95,22 +50,31 @@ sonata_media:
 # to a specific format. (ie a controller render the file)
 #    more information can be found here : https://github.com/liip/LiipImagineBundle
 #
-#liip_imagine:
-#    filter_sets:
-#        default_small:
-#            quality: 75
-#            controller_action: 'SonataMediaBundle:Media:liipImagineFilter'
-#            filters:
-#                thumbnail: { size: [100, 70], mode: outbound }
-#
-#
-#        default_big:
-#            quality: 75
-#            controller_action: 'SonataMediaBundle:Media:liipImagineFilter'
-#            filters:
-#                thumbnail: { size: [500, 70], mode: outbound }
-
-# Enable Doctrine to map the provided entities
+liip_imagine:
+    driver:               gd 
+    web_root:             %kernel.root_dir%/../../../
+    data_root:            %kernel.root_dir%/../../../data/uploads/media
+    cache_prefix:         data/uploads/media
+    data_loader:          filesystem   
+    filter_sets:
+        # admin
+        admin:
+            quality: 100
+            controller_action: 'ApplicationSonataMediaBundle:Media:liipImagineFilter'
+            filters:
+                thumbnail: { size: [75, 65], mode: inset }
+        # story
+        story_detail_img:
+            quality: 100
+            controller_action: 'ApplicationSonataMediaBundle:Media:liipImagineFilter'
+            filters:
+                thumbnail: { size: [410, 308], mode: outbound }
+        # avatars
+        avatar_profile_block:
+            quality: 100
+            controller_action: 'ApplicationSonataMediaBundle:Media:liipImagineFilter'
+            filters:
+                thumbnail: { size: [48, 48], mode: outbound, allow_upscale: true }
 doctrine:
     orm:
         entity_managers:

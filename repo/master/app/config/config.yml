@@ -12,6 +12,10 @@ imports:
     - { resource: sonata/sonata_seo.yml }
     - { resource: sonata/sonata_notification.yml }
 
+# Social
+    - { resource: social/vk.yml }
+    - { resource: social/ok.yml }
+
 framework:
     #esi:             ~
     translator: { fallback: ru }

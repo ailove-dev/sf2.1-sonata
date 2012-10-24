@@ -2,4 +2,8 @@ parameters:
 #
 
 services:
-#
+  form.sonata_json:
+        id: form.sonata_json
+        class: Application\Sonata\AdminThemeBundle\Form\Type\JsonType
+        tags:
+            - { name: form.type, alias: sonata_json }

@@ -5,11 +5,30 @@
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="Application\Sonata\UserBundle\Entity\User" table="users">
-
+        <indexes>
+            <index columns="vk_uid" name="USERS_VK_UID_IDX"/>
+            <index columns="ok_uid" name="USERS_OK_UID_IDX"/>
+        </indexes>
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-
+        <field name="sex"    type="string"     column="sex"  length="255"    nullable="true" />
+        <field name="age"    type="integer"     column="age"  length="255"    nullable="true" />
+        <field name="cityText"    type="string"     column="city_text"  length="255"    nullable="true" />
+        <field name="clientIp"    type="string"     column="client_ip"  length="50"    nullable="true" />
+        <field name="vkUid"     type="string"     column="vk_uid"  length="255"    nullable="true" />
+        <field name="vkFirstName"    type="string"     column="vk_first_name"  length="255"    nullable="true" />
+        <field name="vkLastName"    type="string"     column="vk_last_name"  length="255"    nullable="true" />
+        <field name="vkFriends"    type="json"       column="vk_friends"  nullable="true" />
+        <field name="vkData"    type="json"       column="vk_data"  nullable="true" />
+        <field name="vkBirthday"    type="date"       column="vk_birthday"  nullable="true" />
+        <field name="okUid"     type="string"     column="ok_uid"  length="255"    nullable="true" />
+        <field name="okFirstName"    type="string"     column="ok_first_name"  length="255"    nullable="true" />
+        <field name="okLastName"    type="string"     column="ok_last_name"  length="255"    nullable="true" />
+        <field name="okFriends"    type="json"       column="ok_friends"  nullable="true" />
+        <field name="okData"    type="json"       column="ok_data"  nullable="true" />
+        <field name="okBirthday"    type="date"       column="ok_birthday"  nullable="true" />
+        <many-to-one field="photo" target-entity="Application\Sonata\MediaBundle\Entity\Media" nullable="true" />
     </entity>
 
 </doctrine-mapping>

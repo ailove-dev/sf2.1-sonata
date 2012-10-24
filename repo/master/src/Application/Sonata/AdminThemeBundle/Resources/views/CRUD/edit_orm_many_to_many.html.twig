@@ -14,7 +14,7 @@ file that was distributed with this source code.
         <span id="field_widget_{{ id }}" >
             {{ form_widget(form) }}
         </span>
-
+{% if sonata_admin.field_description.fieldName != 'groups' and sonata_admin.field_description.fieldName != 'mailingLists' %}
         <span id="field_actions_{{ id }}" class="field-actions">
             {% if sonata_admin.field_description.associationadmin.hasRoute('create') and sonata_admin.field_description.associationadmin.isGranted('CREATE') %}
                 <a
@@ -30,7 +30,7 @@ file that was distributed with this source code.
                 </a>
             {% endif %}
         </span>
-
+{% endif %}
         <div style="display: none" id="field_dialog_{{ id }}">
         </div>
     </div>

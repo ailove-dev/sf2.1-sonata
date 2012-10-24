@@ -17,8 +17,6 @@ use Sonata\MediaBundle\Entity\BaseGalleryHasMedia as BaseGalleryHasMedia;
  *
  * References :
  *   working with object : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/working-with-objects/en
- *
- * @author <yourname> <youremail>
  */
 class GalleryHasMedia extends BaseGalleryHasMedia
 {
