@@ -1,0 +1,9 @@
+; VK
+VK_APP_ID=
+VK_APP_SECRET=
+VK_REDIRECT_URI=http://project.local/app_dev.php/vk/login_check/
+; OK
+OK_APP_ID=
+OK_APP_SECRET=
+OK_PUBLIC_KEY=
+OK_REDIRECT_URI=http://project.local/app_dev.php/ok/login_check/
