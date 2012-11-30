@@ -80,12 +80,13 @@ Database initialization
 At this point, the ``app/console`` command should start with no issues. However some you need the complete some others step:
 
 * database configuration (create the ``project/conf/database`` file)
+
 Database file example::
+
     DB_HOST = 127.0.0.1
     DB_NAME = sf21sonata
     DB_USER = user
     DB_PASSWORD =
-
 
 If DB was not created run the command::
 
