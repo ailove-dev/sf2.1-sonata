@@ -46,6 +46,7 @@ Installation
 ------------
 
 Let's guess you have project named "project". To create project run the following commands::
+
     mkdir project
     cd project
 
