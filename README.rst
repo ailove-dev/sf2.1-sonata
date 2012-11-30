@@ -47,7 +47,6 @@ Installation
 
 Let's guess you have project named "project". To create project run the following commands::
 
-````
     mkdir project
     cd project
     mkdir cache conf data repo tmp logs
@@ -60,7 +59,6 @@ Let's guess you have project named "project". To create project run the followin
     git init
     git add .
     git commit -m "Initial commit"
-````
 
 About directories structure
 ~~~~~~~~~~~~~~~~~~~~~~~
