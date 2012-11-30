@@ -47,15 +47,12 @@ Installation
 
 Let's guess you have project named "project". To create project run the following commands::
 
+````
     mkdir project
     cd project
-
     mkdir cache conf data repo tmp logs
     chmod 777 *
     mkdir repo/dev
-
-
-
     git clone https://github.com/ailove-dev/sf2.1-sonata.git repo/dev
     cd repo/dev
     rm -rf .git
@@ -63,6 +60,7 @@ Let's guess you have project named "project". To create project run the followin
     git init
     git add .
     git commit -m "Initial commit"
+````
 
 About directories structure
 ~~~~~~~~~~~~~~
