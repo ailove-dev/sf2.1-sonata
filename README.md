@@ -63,6 +63,7 @@ Let's guess you have project named "project". To create project run the followin
 ````
 
 About directories structure
+~~~~~~~~~~~~~~~~~~~~~~~
 
 cache - for framework cache
 conf - host independed configuration INI files parsed by app/config/factory.php file
