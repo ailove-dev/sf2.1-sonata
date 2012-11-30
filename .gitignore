@@ -1,8 +1,4 @@
-logs
-repo/dev/vendor
-composer.lock
-repo/dev/bin/behat
-repo/dev/bin/doctrine
-repo/dev/bin/doctrine.php
-repo/dev/htdocs/bundles
-tmp
+*.php~
+composer.phar
+htdocs/bundles
+vendor

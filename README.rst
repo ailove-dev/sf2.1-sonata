@@ -50,8 +50,7 @@ Run the following commands::
     git clone https://github.com/ailove-dev/sf2.1-sonata.git project
     cd project
     rm -rf .git
-    cd repo/master
-    composer.phar install
+    php bin/vendors install
     git init
     git add .
     git commit -m "Initial commit"
@@ -89,10 +88,3 @@ Open http://project-url.lo/admin/login in your browser and fill the authorizatio
 
 
 Enjoy!
-
-TODO
-----
-
-* web-server config
-* composer install
-* find . -type d -name .git | xargs rm -rf
