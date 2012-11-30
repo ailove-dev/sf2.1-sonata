@@ -63,7 +63,7 @@ Let's guess you have project named "project". To create project run the followin
 ````
 
 About directories structure
-~~~~~~~~~~~~~~
+
 * cache - for framework cache
 * conf - host independed configuration INI files parsed by app/config/factory.php file
 * data - directory for uploaded files. Use directory alias for virtual host ``Alias /data /path/to/project/data``
