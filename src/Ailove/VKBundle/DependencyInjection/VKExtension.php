@@ -32,7 +32,5 @@ class VKExtension extends Extension
         $container->setParameter('vk.redirect_uri', $config['redirect_uri']);
         $container->setParameter('vk.dialog_url', $config['dialog_url']);
         $container->setParameter('vk.oauth_proxy_class', $config['oauth_proxy_class']);
-        $container->setParameter('vk.oauth_proxy_file', $config['oauth_proxy_file']);
-        $container->setParameter('vk.sdk_file', $config['sdk_file']);
     }
 }

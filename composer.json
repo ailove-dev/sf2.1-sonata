@@ -56,7 +56,8 @@
         "mopa/wsse-authentication-bundle": "dev-master",
 
         "kriswallsmith/buzz": "0.7.*",
-        "genemu/form-bundle": "2.1.x-dev"
+        "genemu/form-bundle": "2.1.x-dev",
+        "ailove-dev/vk-php-sdk": "*"
     },
     
     "scripts": {

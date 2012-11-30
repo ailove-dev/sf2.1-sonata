@@ -4,7 +4,7 @@ parameters:
 services:
     vk.oauth.proxy:
         class: %vk.oauth_proxy_class%
-        file: %vk.oauth_proxy_file%
+#        file: %vk.oauth_proxy_file%
         arguments: 
             clientId: %vk.app_id% 
             clientSecret: %vk.app_secret%
@@ -17,7 +17,7 @@ services:
             - [ setContainer, [ '@service_container' ] ]
     vk.api:
         class: 'VkPhpSdk'
-        file: %vk.sdk_file%
+#        file: %vk.sdk_file%
     vk.user.provider: 
         class: 'Ailove\VKBundle\Security\User\VKUserProvider'
         arguments: [ '@vk.oauth.proxy', '@fos_user.user_manager' ]

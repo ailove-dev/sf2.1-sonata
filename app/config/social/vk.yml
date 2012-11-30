@@ -9,5 +9,3 @@ vk:
     redirect_uri: %VK_REDIRECT_URI%
     scope: 'friends,groups'
     oauth_proxy_class: Ailove\VKBundle\Service\VKOauthSessionProxy
-    oauth_proxy_file: %kernel.root_dir%/../src/vk-php-sdk/classes/Oauth2Proxy.php
-    sdk_file: %kernel.root_dir%/../src/vk-php-sdk/classes/VkPhpSdk.php

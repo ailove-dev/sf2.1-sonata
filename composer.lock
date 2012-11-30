@@ -1,6 +1,48 @@
 {
-    "hash": "1c0278f456ac24e661f6d39eeb96f12f",
+    "hash": "315b6e4be4065e1162c1b4e6f19721c0",
     "packages": [
+        {
+            "name": "ailove-dev/vk-php-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ailove-dev/vkPhpSdk.git",
+                "reference": "a58e1da2a121c87af16f81c05329da6d625b4496"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ailove-dev/vkPhpSdk/archive/a58e1da2a121c87af16f81c05329da6d625b4496.zip",
+                "reference": "a58e1da2a121c87af16f81c05329da6d625b4496",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1"
+            },
+            "time": "2012-11-30 12:24:45",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    "classes",
+                    "interfaces"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "AndreyGeonya",
+                    "email": "unkown@mail.com"
+                }
+            ],
+            "description": "vk php sdk",
+            "homepage": "https://github.com/ailove-dev/vkPhpSdk.git",
+            "keywords": [
+                "Symfony2",
+                "sdk",
+                "vkontakte",
+                "vk"
+            ]
+        },
         {
             "name": "behat/behat",
             "version": "v2.3.5",
