@@ -66,12 +66,11 @@ About directories structure
 
 cache - for framework cache
 conf - host independed configuration INI files parsed by app/config/factory.php file
-data - directory for uploaded files. Use directory alias for virtual host ``Alias /data /path/to/project/data``
+data - directory for uploaded files. Use directory alias for virtual host Alias /data /path/to/project/data
 repo - this directory is used to store git repo. We have placed it into repo/dev directory.
 Your virtual host should use repo/dev/htdocs as a document directory in this case
 tmp - use this dir to store tmp files as session and etc.
 logs - store the logs here
-
 
 .. note::
 
