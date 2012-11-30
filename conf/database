@@ -1,4 +1,4 @@
 DB_HOST = 127.0.0.1
 DB_NAME = sf21sonata
-DB_USER = sf21sonata
-DB_PASSWORD = sf21sonata
+DB_USER = user
+DB_PASSWORD = 
