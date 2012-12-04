@@ -17,8 +17,8 @@ services:
             - [ setSdk, [ '@ok.api' ] ]
     ok.api:
         class: 'OkPhpSdk'
-        file: %ok.sdk_file%
-        arguments: 
+#        file: %ok.sdk_file%
+        arguments:
             clientId: %ok.app_id% 
             clientSecret: %ok.app_secret%
             appPublicKey: %ok.app_public_key%

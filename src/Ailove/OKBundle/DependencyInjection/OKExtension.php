@@ -30,7 +30,7 @@ class OKExtension extends Extension
         $container->setParameter('ok.redirect_uri', $config['redirect_uri']);
         $container->setParameter('ok.dialog_url', $config['dialog_url']);
         $container->setParameter('ok.oauth_proxy_class', $config['oauth_proxy_class']);
-        $container->setParameter('ok.sdk_file', $config['sdk_file']);
+//        $container->setParameter('ok.sdk_file', $config['sdk_file']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

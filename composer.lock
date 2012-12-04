@@ -1,6 +1,45 @@
 {
-    "hash": "315b6e4be4065e1162c1b4e6f19721c0",
+    "hash": "a089dd96ecd8146ad352f2cc7154d06d",
     "packages": [
+        {
+            "name": "ailove-dev/ok-php-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ailove-dev/okSDK.git",
+                "reference": "6591c4feaed5bdc3e54bb9aac548e3f753650333"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ailove-dev/okSDK/archive/6591c4feaed5bdc3e54bb9aac548e3f753650333.zip",
+                "reference": "6591c4feaed5bdc3e54bb9aac548e3f753650333",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1"
+            },
+            "time": "2012-11-30 12:29:00",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    "classes"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Ailove"
+                }
+            ],
+            "description": "ok php sdk",
+            "homepage": "https://github.com/ailove-dev/okSDK.git",
+            "keywords": [
+                "Symfony2",
+                "sdk",
+                "Odnodklassniki"
+            ]
+        },
         {
             "name": "ailove-dev/vk-php-sdk",
             "version": "dev-master",
