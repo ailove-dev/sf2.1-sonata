@@ -1,6 +1,51 @@
 {
-    "hash": "12ad3f0a044f3b796db124ad66dcdb00",
+    "hash": "6aff616ff66cbdf03e62529172cee2c5",
     "packages": [
+        {
+            "name": "ailove-dev/ok-bundle",
+            "version": "dev-master",
+            "target-dir": "Ailove/OKBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ailove-dev/OKBundle.git",
+                "reference": "30b46a4039af2b99fad1337ba935fe28240586c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ailove-dev/OKBundle/archive/30b46a4039af2b99fad1337ba935fe28240586c8.zip",
+                "reference": "30b46a4039af2b99fad1337ba935fe28240586c8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "ailove-dev/ok-php-sdk": "dev-master"
+            },
+            "time": "2012-12-04 12:24:39",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Ailove\\OKBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Ailove"
+                }
+            ],
+            "description": "ok authentication bundle via FOSUserBundle",
+            "homepage": "https://github.com/ailove-dev/OKBundle.git",
+            "keywords": [
+                "Symfony2",
+                "Authentication",
+                "fos",
+                "FOSUserBundle",
+                "FriendsOfSymfony",
+                "Odnolkassniki",
+                "OK"
+            ]
+        },
         {
             "name": "ailove-dev/ok-php-sdk",
             "version": "dev-master",
@@ -3463,6 +3508,7 @@
         "white-october/pagerfanta-bundle": 20,
         "mopa/wsse-authentication-bundle": 20,
         "genemu/form-bundle": 20,
-        "ailove-dev/vk-bundle": 20
+        "ailove-dev/vk-bundle": 20,
+        "ailove-dev/ok-bundle": 20
     }
 }
