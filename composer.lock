@@ -1,5 +1,5 @@
 {
-    "hash": "a089dd96ecd8146ad352f2cc7154d06d",
+    "hash": "12ad3f0a044f3b796db124ad66dcdb00",
     "packages": [
         {
             "name": "ailove-dev/ok-php-sdk",
@@ -38,6 +38,51 @@
                 "Symfony2",
                 "sdk",
                 "Odnodklassniki"
+            ]
+        },
+        {
+            "name": "ailove-dev/vk-bundle",
+            "version": "dev-master",
+            "target-dir": "Ailove/VKBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ailove-dev/VKBundle.git",
+                "reference": "c2e3ebdc9f4f9d8d878ee77ce907baa838c8df5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ailove-dev/VKBundle/archive/c2e3ebdc9f4f9d8d878ee77ce907baa838c8df5d.zip",
+                "reference": "c2e3ebdc9f4f9d8d878ee77ce907baa838c8df5d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "ailove-dev/vk-php-sdk": "dev-master"
+            },
+            "time": "2012-12-04 12:04:45",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Ailove\\VKBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Ailove"
+                }
+            ],
+            "description": "vk authentication bundle via FOSUserBundle",
+            "homepage": "https://github.com/ailove-dev/VKBundle.git",
+            "keywords": [
+                "Symfony2",
+                "Authentication",
+                "vkontakte",
+                "fos",
+                "vk",
+                "FOSUserBundle",
+                "FriendsOfSymfony"
             ]
         },
         {
@@ -3417,6 +3462,7 @@
         "pagerfanta/pagerfanta": 20,
         "white-october/pagerfanta-bundle": 20,
         "mopa/wsse-authentication-bundle": 20,
-        "genemu/form-bundle": 20
+        "genemu/form-bundle": 20,
+        "ailove-dev/vk-bundle": 20
     }
 }

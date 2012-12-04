@@ -58,7 +58,8 @@
         "kriswallsmith/buzz": "0.7.*",
         "genemu/form-bundle": "2.1.x-dev",
         "ailove-dev/vk-php-sdk": "*",
-        "ailove-dev/ok-php-sdk": "*"
+        "ailove-dev/ok-php-sdk": "*",
+        "ailove-dev/vk-bundle": "dev-master"
     },
     
     "scripts": {
