@@ -60,7 +60,8 @@
         "ailove-dev/vk-php-sdk": "*",
         "ailove-dev/ok-php-sdk": "*",
         "ailove-dev/vk-bundle": "dev-master",
-        "ailove-dev/ok-bundle": "dev-master"
+        "ailove-dev/ok-bundle": "dev-master",
+        "ailove-dev/vk-api-helper-bundle": "dev-master"
     },
     
     "scripts": {

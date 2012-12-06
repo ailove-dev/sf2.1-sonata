@@ -17,6 +17,8 @@ use Buzz\Browser;
 use Ailove\VKBundle\Security\Authentication\Token\VKUserToken;
 use Ailove\OKBundle\Security\Authentication\Token\OKUserToken;
 
+use Monolog\Logger;
+
 /**
  * Social connect.
  */
@@ -359,6 +361,129 @@ class SocialConnectController extends Controller
 
         return $social;
     }
+    
+    public function fillVkData(User $user, Logger $log) {
+
+        $log->addInfo('VK uid: ' . $user->getVkUid() . '. Type VK');
+
+        try {
+            $vkApiHelper = $this->get('vk_api_helper');
+        } catch (\Exception $e) {
+            $log->addError('Error get vk_api_helper service');
+            return;
+        }
+
+        try {
+            $vkId = $vkApiHelper->getVkUid();
+        } catch (\Exception $e) {
+            $log->addError('Error get vk_uid from api');
+            $vkId = null;
+        }
+
+        try {
+            $userProfile = $vkApiHelper->getProfiles(array('uid', 'sex', 'bdate', 'first_name', 'last_name', 'nickname', 'screen_name', 'photo', 'photo_medium', 'photo_big', 'country', 'city', 'interests', 'movies', 'tv', 'books', 'games', 'about'));
+            $info = $userProfile[0];
+        } catch (\Exception $e) {
+            $log->addError('Error get user info from api');
+            return;
+        }
+
+        try {
+            $friends = $vkApiHelper->getFriends();
+        } catch (\Exception $e) {
+            $log->addError('Error get friends info from api');
+        }
+
+        if (null !== $vkId) {
+            $user = $this->getUserManager()->findUserBy(array('vkUid' => $vkId));
+            $entityManager = $this->getDoctrine()->getEntityManager();
+
+            $user->setEnabled(true);
+            $user->setVkUId($vkId);
+
+            $user->setVkFirstName($info['first_name']);
+            $user->setFirstname($info['first_name']);
+            $user->setVkLastName($info['last_name']);
+            $user->setLastname($info['last_name']);
+
+            // Sex
+            $user->setSex($info['sex']);
+
+            $log->addInfo('VK uid: ' . $vkId . '. Update main user info');
+
+            // Photo
+            if (null === $user->getPhoto()) {
+                $this->addAvatar($user, $info['photo_medium']);
+                $log->addInfo('VK uid: ' . $vkId . '. Add user avatar');
+            }
+
+            // Friends
+            if (is_array($friends)) {
+                $user->setVkFriends($friends);
+                $log->addInfo('VK uid: ' . $vkId . '. Add user friends');
+            }
+
+            // Client IP
+            $user->setClientIp($this->getRequest()->getClientIp());
+            $log->addInfo('VK uid: ' . $vkId . '. Add client IP');
+
+            $user->setVkData($info);
+
+            $log->addInfo('VK uid: ' . $vkId . '. Set user json data');
+        }
+    }
+    
+    public function fillOkData(User $user, Logger $log)
+    {
+        $okOauthProxy = $this->get('ok.oauth.proxy');
+        $okUid = $okOauthProxy->getUserId();
+        $okApi = $okOauthProxy->getSdk();
+
+        try {
+            $userProfile = $okApi->api('users.getInfo', array('uids' => $okUid, 'fields' => 'uid,first_name,last_name,name,gender,pic_1,pic_2,location,age,birthday'));
+            $info = $userProfile[0];
+            $friends = $okApi->api('friends.get');
+        } catch(\Exception $e) {
+            return;
+        }
+
+        if (null != $okUid) {
+            $user = $this->getUserManager()->findUserBy(array('okUid' => $okUid));
+            $entityManager = $this->getDoctrine()->getEntityManager();
+
+            $user->setEnabled(true);
+            $user->setOkUid($okUid);
+
+            $user->setOkFirstName($info['first_name']);
+            $user->setFirstname($info['first_name']);
+            $user->setOkLastName($info['last_name']);
+            $user->setLastname($info['last_name']);
+
+            // Sex
+            $sex = 0;
+            if ($info['gender'] == 'male') {
+                $sex = 2;
+            } elseif ($info['gender'] == 'female') {
+                $sex = 1;
+            }
+            $user->setSex($sex);
+
+            // Photo
+            if (null === $user->getPhoto()) {
+                $this->addAvatar($user, $info['pic_2']);
+            }
+
+            // Friends
+            $user->setOkFriends($friends);
+
+            // Client IP
+            $user->setClientIp($this->getRequest()->getClientIp());
+
+            $user->setOkData($info);
+
+        }
+        
+    }
 
     /**
      * Fill user depends on connect type.
@@ -375,122 +500,10 @@ class SocialConnectController extends Controller
 
         switch ($connectType = $this->getSocialConnectType()) {
             case static::CONNECT_TYPE_VK:
-                $log->addInfo('VK uid: ' . $user->getVkUid() . '. Type VK');
-
-                try {
-                    $vkApiHelper = $this->get('vk_api_helper');
-                } catch (\Exception $e) {
-                    $log->addError('Error get vk_api_helper service');
-                    break;
-                }
-
-                try {
-                    $vkId = $vkApiHelper->getVkUid();
-                } catch (\Exception $e) {
-                    $log->addError('Error get vk_uid from api');
-                    $vkId = null;
-                }
-
-                try {
-                    $userProfile = $vkApiHelper->getProfiles(array('uid', 'sex', 'bdate', 'first_name', 'last_name', 'nickname', 'screen_name', 'photo', 'photo_medium', 'photo_big', 'country', 'city', 'interests', 'movies', 'tv', 'books', 'games', 'about'));
-                    $info = $userProfile[0];
-                } catch (\Exception $e) {
-                    $log->addError('Error get user info from api');
-                    break;
-                }
-
-                try {
-                    $friends = $vkApiHelper->getFriends();
-                } catch (\Exception $e) {
-                    $log->addError('Error get friends info from api');
-                }
-
-                if (null !== $vkId) {
-                    $user = $this->getUserManager()->findUserBy(array('vkUid' => $vkId));
-                    $entityManager = $this->getDoctrine()->getEntityManager();
-
-                    $user->setEnabled(true);
-                    $user->setVkUId($vkId);
-
-                    $user->setVkFirstName($info['first_name']);
-                    $user->setFirstname($info['first_name']);
-                    $user->setVkLastName($info['last_name']);
-                    $user->setLastname($info['last_name']);
-
-                    // Sex
-                    $user->setSex($info['sex']);
-
-                    $log->addInfo('VK uid: ' . $vkId . '. Update main user info');
-
-                    // Photo
-                    if (null === $user->getPhoto()) {
-                        $this->addAvatar($user, $info['photo_medium']);
-                        $log->addInfo('VK uid: ' . $vkId . '. Add user avatar');
-                    }
-                    
-                    // Friends
-                    if (is_array($friends)) {
-                        $user->setVkFriends($friends);
-                        $log->addInfo('VK uid: ' . $vkId . '. Add user friends');
-                    }
-
-                    // Client IP
-                    $user->setClientIp($this->getRequest()->getClientIp());
-                    $log->addInfo('VK uid: ' . $vkId . '. Add client IP');
-
-                    $user->setVkData($info);
-                    
-                    $log->addInfo('VK uid: ' . $vkId . '. Set user json data');
-                }
+                $this->fillVkData($user, $log);
                 break;
             case static::CONNECT_TYPE_OK:
-                $okOauthProxy = $this->get('ok.oauth.proxy');
-                $okUid = $okOauthProxy->getUserId();
-                $okApi = $okOauthProxy->getSdk();
-
-                try {
-                    $userProfile = $okApi->api('users.getInfo', array('uids' => $okUid, 'fields' => 'uid,first_name,last_name,name,gender,pic_1,pic_2,location,age,birthday'));
-                    $info = $userProfile[0];
-                    $friends = $okApi->api('friends.get');
-                } catch(\Exception $e) {
-                    break;
-                }
-
-                if (null != $okUid) {
-                    $user = $this->getUserManager()->findUserBy(array('okUid' => $okUid));
-                    $entityManager = $this->getDoctrine()->getEntityManager();
-
-                    $user->setEnabled(true);
-                    $user->setOkUid($okUid);
-
-                    $user->setOkFirstName($info['first_name']);
-                    $user->setFirstname($info['first_name']);
-                    $user->setOkLastName($info['last_name']);
-                    $user->setLastname($info['last_name']);
-
-                    // Sex
-                    $sex = 0;
-                    if ($info['gender'] == 'male') {
-                        $sex = 2;
-                    } elseif ($info['gender'] == 'female') {
-                        $sex = 1;
-                    }
-                    $user->setSex($sex);
-
-                    // Photo
-                    if (null === $user->getPhoto()) {
-                        $this->addAvatar($user, $info['pic_2']);
-                    }
-                    
-                    // Friends
-                    $user->setOkFriends($friends);
-
-                    // Client IP
-                    $user->setClientIp($this->getRequest()->getClientIp());
-
-                    $user->setOkData($info);
-                    
-                }
+                $this->fillOkData($user, $log);
                 break;
             default:
                 throw new \Exception('Нет коннекта ни к одной из поддерживаемых сетей');

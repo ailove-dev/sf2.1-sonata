@@ -1,5 +1,5 @@
 {
-    "hash": "6aff616ff66cbdf03e62529172cee2c5",
+    "hash": "c665187448f747e9371d1e578c9783b4",
     "packages": [
         {
             "name": "ailove-dev/ok-bundle",
@@ -83,6 +83,48 @@
                 "Symfony2",
                 "sdk",
                 "Odnodklassniki"
+            ]
+        },
+        {
+            "name": "ailove-dev/vk-api-helper-bundle",
+            "version": "dev-master",
+            "target-dir": "Ailove/VKApiHelperBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ailove-dev/VKApiHelperBundle.git",
+                "reference": "0ad1d36921580fe8dca19dd80db2dba7fe32b537"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ailove-dev/VKApiHelperBundle/archive/0ad1d36921580fe8dca19dd80db2dba7fe32b537.zip",
+                "reference": "0ad1d36921580fe8dca19dd80db2dba7fe32b537",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "ailove-dev/vk-bundle": "dev-master"
+            },
+            "time": "2012-12-06 12:58:32",
+            "type": "symfony-bundle",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Ailove\\VKApiHelperBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Ailove"
+                }
+            ],
+            "description": "Extended methods for VK php sdk",
+            "homepage": "https://github.com/ailove-dev/VKApiHelperBundle.git",
+            "keywords": [
+                "Symfony2",
+                "api",
+                "vkontakte",
+                "vk"
             ]
         },
         {
@@ -3509,6 +3551,7 @@
         "mopa/wsse-authentication-bundle": 20,
         "genemu/form-bundle": 20,
         "ailove-dev/vk-bundle": 20,
-        "ailove-dev/ok-bundle": 20
+        "ailove-dev/ok-bundle": 20,
+        "ailove-dev/vk-api-helper-bundle": 20
     }
 }
