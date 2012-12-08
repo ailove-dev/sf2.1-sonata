@@ -19,6 +19,8 @@ use Ailove\OKBundle\Security\Authentication\Token\OKUserToken;
 
 use Monolog\Logger;
 
+use FOS\FacebookBundle\Security\Authentication\Token\FacebookUserToken;
+
 /**
  * Social connect.
  */
@@ -29,6 +31,7 @@ class SocialConnectController extends Controller
     const CONNECT_TYPE_NONE = 'CONNECT_TYPE_NONE';
     const CONNECT_TYPE_VK = 'CONNECT_TYPE_VK';
     const CONNECT_TYPE_OK = 'CONNECT_TYPE_OK';
+    const CONNECT_TYPE_FB = 'CONNECT_TYPE_FB';
 
     protected $userManager;
 
@@ -63,7 +66,9 @@ class SocialConnectController extends Controller
         $form = $this->createForm(new SocialConnectFormType());
 
         if ('POST' == $this->getRequest()->getMethod()) {
-            $form->bindRequest($this->getRequest());
+            $form->bind($this->getRequest());
+
+            $msg = '';
 
             if ($form->isValid()) {
                 $log->addInfo('Form submit data is valid');
@@ -76,6 +81,7 @@ class SocialConnectController extends Controller
                     $log->addInfo('User email has in DB');
                     // Email exists, need verify
                     $this->get('session')->set(static::EMAIL_VERIFICATION_SESSION_KEY, $userWithEmailExists->getEmail());
+
                     
                     if ($this->getRequest()->isXmlHttpRequest()) {
                         // Handle XHR here
@@ -88,7 +94,7 @@ class SocialConnectController extends Controller
                         return new Response(json_encode($result));
                     }
             
-                    return $this->redirect($this->container->get('router')->generate('StoryBundle_homepage'));
+                    return $this->redirect($this->container->get('router')->generate('homepage'));
                 } else {
                     $log->addInfo('Before fillUserDependsOnConnectType');
                     // Now we can create new user
@@ -106,6 +112,7 @@ class SocialConnectController extends Controller
 
                     // Token 
                     $confirmToken = $user->getConfirmationToken();
+
                     if (null === $confirmToken) {
                         $tokenGenerator = $this->get('fos_user.util.token_generator');
                         $confirmToken = $tokenGenerator->generateToken();
@@ -176,6 +183,9 @@ class SocialConnectController extends Controller
             $securityContext = $this->container->get('security.context');
 
             if ($securityContext->getToken()->isAuthenticated()) {
+                /**
+                 * @var User $user
+                 */
                 $user = $securityContext->getToken()->getUser();
 
                 switch ($this->getSocialConnectType()) {
@@ -186,6 +196,10 @@ class SocialConnectController extends Controller
                     case static::CONNECT_TYPE_VK:
                         $socialUid = $user->getVkUid();
                         $social = 'vk';
+                        break;
+                    case static::CONNECT_TYPE_FB:
+                        $socialUid = $user->getFacebookUid();
+                        $social = 'fb';
                         break;
                 }
 
@@ -298,6 +312,17 @@ class SocialConnectController extends Controller
         return $this->redirect($this->container->get('router')->generate('StoryBundle_homepage'));
     }
 
+    public function connectFbAction()
+    {
+
+        /**
+         * @var \FOS\FacebookBundle\Facebook\FacebookSessionPersistence $fbApi
+         */
+        $fbApi = $this->get('fos_facebook.api');
+
+        return new \Symfony\Component\HttpFoundation\RedirectResponse($fbApi->getLoginUrl(array('redirect_uri' => $this->generateUrl('_fb_security_check', array(), true))));
+    }
+
     /**
      * Connect
      *
@@ -357,11 +382,39 @@ class SocialConnectController extends Controller
             $social = static::CONNECT_TYPE_VK;
         } elseif ($token instanceof OKUserToken) {
             $social = static::CONNECT_TYPE_OK;
+        } elseif ($token instanceof FacebookUserToken) {
+            $social = static::CONNECT_TYPE_FB;
         }
 
         return $social;
     }
-    
+
+    public function fillFbData(User $user, Logger $log) {
+
+        $log->addInfo('FB uid: ' . $user->getFacebookUid() . '. Type FB');
+
+        /**
+         * @var \FOS\FacebookBundle\Facebook\FacebookSessionPersistence $fbApi
+         */
+        $fbApi = $this->get('fos_facebook.api');
+
+        $fbData = $fbApi->api('me?fields=picture,last_name,first_name,name');
+        if (!empty($fbData['id'])) {
+
+            $user->setFirstname($fbData['first_name']);
+            $user->setLastname($fbData['last_name']);
+            $user->setFacebookName($fbData['name']);
+
+            $log->addInfo('FB uid: ' . $fbApi->getUser() . '. Add user avatar');
+
+            if (!empty($fbData['picture']['data']['url'])) {
+                if (!$this->addAvatar($user, $fbData['picture']['data']['url'])) {
+                    $log->addInfo('FB uid: ' . $fbApi->getUser() . ' failed to add avatar');
+                }
+            }
+        }
+    }
+
     public function fillVkData(User $user, Logger $log) {
 
         $log->addInfo('VK uid: ' . $user->getVkUid() . '. Type VK');
@@ -505,6 +558,10 @@ class SocialConnectController extends Controller
             case static::CONNECT_TYPE_OK:
                 $this->fillOkData($user, $log);
                 break;
+            case static::CONNECT_TYPE_FB:
+                $this->fillFbData($user, $log);
+                break;
+
             default:
                 throw new \Exception('Нет коннекта ни к одной из поддерживаемых сетей');
         }
@@ -515,18 +572,37 @@ class SocialConnectController extends Controller
     /**
      * Add avatar.
      *
-     * @param object $user     User instance
+     * @param User $user     User instance
      * @param string $imageUrl Image url
      */
     protected function addAvatar($user, $imageUrl)
     {
         try {
+//            var_dump($user->getPhoto());die;
             // Download avatar
-            $media = new Media;
+            if ($user->getPhoto() && $user->getPhoto()->getId()) {
+                $media = $user->getPhoto();
+
+                /**
+                 * @var \Sonata\MediaBundle\Provider\ImageProvider $imageProvider
+                 */
+                $imageProvider = $this->get('sonata.media.provider.image');
+
+                $file = realpath('../../../') . $imageProvider->generatePublicUrl($media, 'reference');
+                $preview = realpath('../../../') . $imageProvider->generatePublicUrl($media, 'avatar_profile_block');
+                if (file_exists($file)) {
+                    @unlink($file);
+                    @unlink($preview);
+                }
+            } else {
+                $media = new Media;
+            }
+
             $browser = new Browser();
             $data = $browser->get($imageUrl);
             $filename = tempnam(sys_get_temp_dir(), 'avatar');
             file_put_contents($filename, $data->getContent());
+
 
             // Save avatar
             $media->setName($filename);
@@ -535,11 +611,19 @@ class SocialConnectController extends Controller
             $media->setContext('avatar');
             $media->setProviderName('sonata.media.provider.image');
             $mediaManager = $this->get('sonata.media.manager.media');
-            $mediaManager->save($media);
+
 
             // Attach avatar
             $user->setPhoto($media);
+            $mediaManager->save($media);
+
+            return true;
         } catch (\Exception $e) {
+//            die('Error handling avatar' . $e->getMessage());
+//            $log = $this->get('monolog.user_connect');
+            /**
+             * @var \Monolog\Logger $log
+             */
             return false;
         }
     }
@@ -596,8 +680,19 @@ class SocialConnectController extends Controller
 
     protected function createToken($user, $roles)
     {
-        $tokenClass = get_class($this->container->get('security.context')->getToken());
-        $newToken = new $tokenClass($user, $roles);
+        $token = $this->container->get('security.context')->getToken();
+
+        if ($token instanceof VKUserToken || $token instanceof OKUserToken) {
+            $tokenClass = get_class($token);
+            $newToken = new $tokenClass($user, $roles);
+        } elseif ($token instanceof FacebookUserToken) {
+            /**
+             * @var FacebookUserToken $token
+             */
+            $newToken = new FacebookUserToken($token->getProviderKey(), $user, $roles);
+        } else {
+            throw new \Symfony\Component\Security\Core\Exception\UnsupportedUserException('User with provided token doesn\'t supported');
+        }
 
         return $newToken;
     }

@@ -26,6 +26,9 @@ class User extends BaseUser
     // Odnoklassniki
     const ROLE_OK_USER = 'ROLE_OK_USER';
 
+    //facebook
+    const ROLE_FACEBOOK_USER = 'ROLE_FACEBOOK_USER';
+
     // Successfully registered or connected user
     const ROLE_REGISTERED = 'ROLE_REGISTERED';
     

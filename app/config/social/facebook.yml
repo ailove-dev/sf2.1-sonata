@@ -1,0 +1,6 @@
+# 
+# more information can be found here http://sonata-project.org/bundles/user
+#
+fos_facebook:
+    app_id: %FB_APP_ID%
+    secret: %FB_APP_SECRET%

@@ -1,6 +1,50 @@
 {
-    "hash": "c665187448f747e9371d1e578c9783b4",
+    "hash": "501bf212abad2ea6366807f33681c4e2",
     "packages": [
+        {
+            "name": "ailove-dev/facebook-bundle",
+            "version": "dev-master",
+            "target-dir": "Ailove/FacebookBundle",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:ailove-dev/FacebookBundle.git",
+                "reference": "50c6c109323c6d76a7c74d98368ce6232716341a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ailove-dev/FacebookBundle/archive/50c6c109323c6d76a7c74d98368ce6232716341a.zip",
+                "reference": "50c6c109323c6d76a7c74d98368ce6232716341a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "friendsofsymfony/facebook-bundle": "dev-master"
+            },
+            "time": "2012-12-07 19:11:38",
+            "type": "symfony-bundle",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Ailove\\FacebookBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Ailove"
+                }
+            ],
+            "description": "facebook authentication bundle via FOSUserBundle",
+            "homepage": "https://github.com/ailove-dev/FacebookBundle.git",
+            "keywords": [
+                "Symfony2",
+                "Authentication",
+                "facebook",
+                "fos",
+                "FOSUserBundle",
+                "FriendsOfSymfony"
+            ]
+        },
         {
             "name": "ailove-dev/ok-bundle",
             "version": "dev-master",
@@ -856,6 +900,101 @@
             "keywords": [
                 "database",
                 "orm"
+            ]
+        },
+        {
+            "name": "facebook/php-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/facebook/facebook-php-sdk.git",
+                "reference": "ca9472b3312dab3fdcfbffb4e45eb091f582dcb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/facebook/facebook-php-sdk/archive/ca9472b3312dab3fdcfbffb4e45eb091f582dcb7.zip",
+                "reference": "ca9472b3312dab3fdcfbffb4e45eb091f582dcb7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0",
+                "ext-curl": "*",
+                "ext-json": "*"
+            },
+            "time": "2012-12-07 02:24:53",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Facebook",
+                    "homepage": "https://github.com/facebook/facebook-php-sdk/contributors"
+                }
+            ],
+            "description": "Facebook PHP SDK",
+            "homepage": "https://github.com/facebook/facebook-php-sdk",
+            "keywords": [
+                "facebook",
+                "sdk"
+            ]
+        },
+        {
+            "name": "friendsofsymfony/facebook-bundle",
+            "version": "dev-master",
+            "target-dir": "FOS/FacebookBundle",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/FriendsOfSymfony/FOSFacebookBundle.git",
+                "reference": "11faaa0ef98e6d9845033bade823901e1e5b4509"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/FriendsOfSymfony/FOSFacebookBundle/archive/11faaa0ef98e6d9845033bade823901e1e5b4509.zip",
+                "reference": "11faaa0ef98e6d9845033bade823901e1e5b4509",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "facebook/php-sdk": "dev-master",
+                "symfony/framework-bundle": ">=2.1,<2.3-dev",
+                "symfony/security-bundle": ">=2.1,<2.3-dev",
+                "symfony/twig-bundle": ">=2.1,<2.3-dev"
+            },
+            "time": "2012-10-13 22:18:09",
+            "type": "symfony-bundle",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "FOS\\FacebookBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                },
+                {
+                    "name": "FriendsOfSymfony Community",
+                    "homepage": "https://github.com/friendsofsymfony/FOSFacebookBundle/contributors"
+                }
+            ],
+            "description": "Integrate the Facebook Platform into your Symfony2 application.",
+            "homepage": "http://friendsofsymfony.github.com",
+            "keywords": [
+                "facebook"
             ]
         },
         {

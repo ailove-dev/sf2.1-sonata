@@ -15,6 +15,7 @@ imports:
 # Social
     - { resource: social/vk.yml }
     - { resource: social/ok.yml }
+    - { resource: social/facebook.yml }
 
 framework:
     #esi:             ~

@@ -25,3 +25,9 @@ _ok_security_check:
 _ok_login:
     pattern: /ok/login/
     defaults: { _controller: 'ApplicationSonataUserBundle:SocialConnect:connectOk' }
+_fb_security_check:
+    pattern: /fb/login_check/
+    defaults: { _controller: 'ApplicationSonataUserBundle:Security:check' }
+_fb_login:
+    pattern: /fb/login/
+    defaults: { _controller: 'ApplicationSonataUserBundle:SocialConnect:connectFb' }

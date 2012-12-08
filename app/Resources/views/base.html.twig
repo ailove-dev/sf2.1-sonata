@@ -16,11 +16,11 @@
                          <div>Имя: <span>{{ authUser.firstname ~ ' ' ~ authUser.lastname}}</span></div>
                                                                      
                          <div><a href="{{ path('fos_user_security_logout') }}">Выход</a></div>
-                         <div><img width="48" alt="" src="{{ authUser.photo ? media_path(authUser.photo, 'profile_block') : asset('img/face.png')}}"></div>
+                         <div><img width="48" alt="" src="{{ authUser.photo ? media_path(authUser.photo, 'profile_block') : ''}}"></div>
                      </div>
                  </div>
             {% else %}
-                <a href="{{ path('_vkontakte_login') }}">VK</a> | <a href="{{ path('_ok_login') }}">OK</a>
+                <a href="{{ path('_vkontakte_login') }}">VK</a> | <a href="{{ path('_ok_login') }}">OK</a> | <a href="{{ path('_fb_login') }}">FB</a>
             {% endif %}
         {% endblock %}
 

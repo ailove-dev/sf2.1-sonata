@@ -59,11 +59,15 @@ class AppKernel extends Kernel
             // SONATA ADMIN THEME
             new Application\Sonata\AdminThemeBundle\AdminThemeBundle(),
 
+            //FACEBOOK
+            new \FOS\FacebookBundle\FOSFacebookBundle(),
+
             // AILOVE
             new Ailove\HelloBundle\HelloBundle(),
             new Ailove\OKBundle\OKBundle(),
             new Ailove\VKBundle\VKBundle(),
             new Ailove\VKApiHelperBundle\VKApiHelperBundle(),
+            new \Ailove\FacebookBundle\AiloveFacebookBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

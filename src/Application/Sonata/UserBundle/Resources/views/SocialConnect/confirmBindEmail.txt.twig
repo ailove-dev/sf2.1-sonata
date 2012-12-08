@@ -2,7 +2,16 @@
 <html>
     <head></head>
     <body>
-        Cоциальный аккаунт "{{ socialUid }} - {{ social == 'ok' ? 'odnoklassniki.ru' : 'vk.com'}}" связан с аккаунтом сайта "{{ email }}".<br/><br/>
+        Cоциальный аккаунт "{{ socialUid }} -
+        {% if social == 'ok' %}
+        odnoklassniki.ru
+        {% elseif social == 'vk' %}
+        vk.com
+        {% elseif social == 'fb' %}
+        facebook.com
+        {% else %}
+        {% endif %}
+        связан с аккаунтом сайта "{{ email }}".<br/><br/>
         Теперь вы можете авторизовываться на сайте с помощью вашего социального профиля!
     </body>
 </html>

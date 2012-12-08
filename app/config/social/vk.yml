@@ -4,8 +4,6 @@
 vk:
     app_id: %VK_APP_ID%
     app_secret: %VK_APP_SECRET%
-    access_token_url: 'https://oauth.vkontakte.ru/access_token'
-    dialog_url: 'http://oauth.vk.com/oauth/authorize'
-    redirect_uri: %VK_REDIRECT_URI%
+#    redirect_uri: %VK_REDIRECT_URI%
     scope: 'friends,groups'
-    oauth_proxy_class: Ailove\VKBundle\Service\VKOauthSessionProxy
+    redirect_route: _vk_security_check
