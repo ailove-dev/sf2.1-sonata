@@ -1,50 +1,13 @@
 {% extends '::base.html.twig' %}
 
-{% block popup %}
+{% block body %}
+{% set social_titles = { 'ok': 'odnoklassniki.ru', 'vk': 'vk.com', 'facebook': 'facebook.com' } %}
 <div class="popup_type2">
         <div class="popup_yourpass">
                 <p class="popup_yourpass_intro">Авторизация через социальную сеть</p>
-                <p class="popup_yourpass_outro">Аккаунт<br/><span>{{ socialUid }} - {{ social == 'ok' ? 'odnoklassniki.ru' : 'vk.com'}}</span></p>
+                <p class="popup_yourpass_outro">Аккаунт<br/><span>{{ socialUid }} - {{ social_titles[social] }}</span></p>
                 <p class="popup_yourpass_outro">Связан с аккаунтом<br /><span>{{ email }}</span></p>
-                <div class="popup_lastreg_buttons">
-                        <a href="{{ social == 'ok' ? url('_ok_login') : url('_vkontakte_login')}}"><img src="{{ asset('img/mainpage/button_yourpass.png' ) }}"/></a>
-                </div>
         </div>
 
 </div>	
-{% endblock %}
-
-{% block maincontent %}
-<div class="maincontent auth_before_maincontent">
-        <div class="basic">
-                <div class="auth_before">
-                        <div class="auth_before_intro">
-                                <p class="hh">«Настоящая любовь» — что мы знаем о ней?</p>
-                                <p class="txt">Была ли это первая школьная любовь или пришедшая с годами?<br />У каждого своя неповторимая история.</p>
-                                <p class="txt">Проект «Настоящая любовь» создан для того, чтобы собрать воедино истории о&nbsp;настоящей&nbsp;любви людей разного пола и возраста из разных городов России.<br />А вы чувствовали когда-нибудь настоящую любовь?<br />Расскажите нам об этом!</p>
-                        </div>
-                        <div class="auth_before_columns clearfix">
-                                <div class="auth_before_columns_one floatleft">
-                                        <p>Напишите, что для вас «настоящая любовь». Прикладывайте к своей истории фото и видео</p>
-                                </div>
-                                <div class="auth_before_columns_two floatleft">
-                                        <p>Авторов 50 самых интересных историй продюсеры СТС пригласят на кастинг</p>
-                                </div>
-                                <div class="auth_before_columns_three floatleft">
-                                        <p>Видеоистории будут транслироваться на телеканале СТС и сайте <a href="#">videomore.ru</a></p>
-                                </div>
-                        </div>
-                </div>
-        </div>
-</div>
-{% endblock %}
-
-{% block user_links %}{% endblock %}
-{% block javascripts_head %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/mainpage.js') }}"></script>
-{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('css/popup_auth.css') }}" rel="stylesheet" />
 {% endblock %}

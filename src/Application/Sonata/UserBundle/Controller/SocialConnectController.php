@@ -194,7 +194,7 @@ class SocialConnectController extends Controller
                         break;
                     case static::CONNECT_TYPE_FB:
                         $socialUid = $user->getFacebookUid();
-                        $social = 'fb';
+                        $social = 'facebook';
                         break;
                 }
 
@@ -234,12 +234,8 @@ class SocialConnectController extends Controller
                             'redirect' => $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'))
                         );
                         return new Response(json_encode($result));   
-                    } else {
-                        return $this->render('ApplicationSonataUserBundle:SocialConnect:successSocialConfirm.html.twig');
-                    }
-                             
+                    }                              
                 }
-
             }
         //}
         
@@ -256,7 +252,7 @@ class SocialConnectController extends Controller
      */
     public function socialBindAction($token, $social, $socialUid)
     {
-        if (!in_array($social, array('ok', 'vk', 'fb'))) {
+        if (!in_array($social, array('ok', 'vk', 'facebook'))) {
             return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
         }
 
@@ -273,8 +269,8 @@ class SocialConnectController extends Controller
             $emailSocial = $socialUid . '@odnoklassniki.ru';
         } else if ($social == 'vk') {
             $emailSocial = $socialUid . '@vk.com';
-        } else if ($social == 'fb') {
-            $emailSocial = $socialUid . '@Facebook.com';
+        } else if ($social == 'facebook') {
+            $emailSocial = $socialUid . '@facebook.com';
         }
         
         $userSocial = $userManager->findUserBy(array($social . 'Uid' => $socialUid, 'email' => $emailSocial));
@@ -284,8 +280,8 @@ class SocialConnectController extends Controller
                     $userWithEmail->setOkUid($socialUid);
                 } else if ($social == 'vk') {
                     $userWithEmail->setVkUid($socialUid);
-                } else if ($social == 'fb') {
-                    $userWithEmail->setFbUid($socialUid);
+                } else if ($social == 'facebook') {
+                    $userWithEmail->setFacebookUid($socialUid);
                 }
 
                 $userWithEmail->setConfirmationToken(null);
@@ -312,7 +308,7 @@ class SocialConnectController extends Controller
                 ));
         }
         
-        return $this->redirect($this->container->get('router')->generate('StoryBundle_homepage'));
+        return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
     }
 
     public function connectFbAction()

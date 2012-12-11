@@ -1,4 +1,4 @@
-{% extends ":Story:base.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block maincontent %}
 
@@ -7,13 +7,3 @@
     </div>
 
 {% endblock maincontent %}
-
-{% block javascripts %}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('a.close').click(function(){
-                document.location.href = '{{ path('StoryBundle_homepage') }}';
-            });
-        });
-    </script>
-{% endblock %}
