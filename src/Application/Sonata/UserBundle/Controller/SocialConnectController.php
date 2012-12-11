@@ -647,8 +647,8 @@ class SocialConnectController extends Controller
         }
 
         $message = \Swift_Message::newInstance()
-                    ->setSubject('Настоящая любовь - Связывание аккаунтов')
-                    ->setFrom(array('reallove.videomore@gmail.com' => 'Настоящая любовь '))
+                    ->setSubject('Связывание аккаунтов')
+                    ->setFrom(array('no-reply@gmail.com' => 'no-reply'))
                     ->setTo(array($params['email']))
                     ->setBody($this->renderView($template, $params), 'text/html');
         
