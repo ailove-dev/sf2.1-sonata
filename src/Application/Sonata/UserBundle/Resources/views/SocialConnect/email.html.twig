@@ -15,30 +15,4 @@
         </form>
     </div>
 </div>
-<div id="emailNotUniq" class="popup_type1" style="display:none;">
-        <div class="popup_closethis"></div>	
-        <div class="popup_hasmail">
-                <p class="popup_hasmail_intro">Авторизация через социальную сеть</p>
-                <p class="popup_hasmail_outro">В нашей системе есть пользователь с таким e-mail:</p>
-                <div class="popup_hasmail_mail">
-                        <p class="popup_hasmail_mail_the"></p>
-                </div>
-                <div class="popup_hasmail_buttons">
-                        <a id="send_confirm_email" href="#">Да, это мой аккаунт</a><a id="new_email" href="#">Указать другой email</a>
-                </div>
-        </div>
-</div>	
-<div id="successSocialConfirm" class="popup_type1" style="display:none;">
-        <div class="popup_closethis"></div>
-        <div class="popup_confirm">
-                <p class="popup_confirm_intro">Авторизация через социальную сеть</p>
-                <p class="popup_confirm_outro">Вам необходимо перейти по ссылке, высланной вам в письме, чтобы связать данный социальный аккаунт с существующим аккаунтом на сайте.</p>
-        </div>
-
-</div>	
-{% endblock %}
-
-{% block javascripts_head %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/social-email.js') }}"></script>
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div id="emailNotUniq" class="popup_type1">
+        <div class="popup_closethis"></div>	
+        <div class="popup_hasmail">
+                <p class="popup_hasmail_intro">Авторизация через социальную сеть</p>
+                <p class="popup_hasmail_outro">В нашей системе есть пользователь с таким e-mail:</p>
+                <div class="popup_hasmail_mail">
+                        <p class="popup_hasmail_mail_the"></p>
+                </div>
+                <div class="popup_hasmail_buttons">
+                        <a id="send_confirm_email" href="{{ path('_social_send_confirm_email', { 'email': email, 'social': social}) }}">Да, это мой аккаунт</a> <br /> <a id="new_email" href="#">Указать другой email</a>
+                </div>
+        </div>
+</div>	
+{% endblock %}

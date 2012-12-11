@@ -92,9 +92,14 @@ class SocialConnectController extends Controller
                         );
 
                         return new Response(json_encode($result));
-                    }
+                    } else {
+                        return $this->render('ApplicationSonataUserBundle:SocialConnect:email_exist.html.twig', array(
+                            'email' => $userWithEmailExists->getEmail(),
+                            'social' => 'vk'
+                        ));
+                    }   
             
-                    return $this->redirect($this->container->get('router')->generate('homepage'));
+                    //return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
                 } else {
                     $log->addInfo('Before fillUserDependsOnConnectType');
                     // Now we can create new user
@@ -137,16 +142,6 @@ class SocialConnectController extends Controller
                         $userMailer = $this->get('fos_user.mailer');
 
                         $userMailer->sendConfirmationEmailMessage($user);
-//                        try {
-//                            $params = array(
-//                                'email' => $email,
-//                                'token' => $confirmToken
-//                            );
-//
-//                            $this->sendEmail($params, 'ApplicationSonataUserBundle:SocialConnect:confirmSocialEmail.txt.twig');
-//                        } catch (\Exception $e) {
-//
-//                        }
 
                         // Handle XHR here
                         $result = array(
@@ -179,7 +174,7 @@ class SocialConnectController extends Controller
      */
     public function sendSocialBindEmailAction($email)
     {
-        if ($this->getRequest()->isXmlHttpRequest()) {
+        //if ($this->getRequest()->isXmlHttpRequest()) {
             $securityContext = $this->container->get('security.context');
 
             if ($securityContext->getToken()->isAuthenticated()) {
@@ -230,21 +225,25 @@ class SocialConnectController extends Controller
                 );
 
                 if ($this->sendEmail($params)) {
-                    // Handle XHR here
-                    $result = array(
-                        'status' => 'ok',
-                        'message' => 'Письмо с инструкцией отправлено',
-                        'redirect' => $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'))
-                    );
 
-                    
-                    return new Response(json_encode($result));        
+                    if ($this->getRequest()->isXmlHttpRequest()) {
+                        // Handle XHR here
+                        $result = array(
+                            'status' => 'ok',
+                            'message' => 'Письмо с инструкцией отправлено',
+                            'redirect' => $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'))
+                        );
+                        return new Response(json_encode($result));   
+                    } else {
+                        return $this->render('ApplicationSonataUserBundle:SocialConnect:successSocialConfirm.html.twig');
+                    }
+                             
                 }
 
             }
-        }
+        //}
         
-        return $this->redirect($this->container->get('router')->generate('StoryBundle_homepage'));
+        return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
     }
 
     /**
@@ -257,15 +256,15 @@ class SocialConnectController extends Controller
      */
     public function socialBindAction($token, $social, $socialUid)
     {
-        if (!in_array($social, array('ok', 'vk'))) {
-            return $this->redirect($this->container->get('router')->generate('StoryBundle_homepage'));
+        if (!in_array($social, array('ok', 'vk', 'fb'))) {
+            return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
         }
 
         $userManager = $this->getUserManager();
         $userWithEmail = $userManager->findUserByConfirmationToken($token);
         
         if (null === $userWithEmail) {
-            return $this->redirect($this->container->get('router')->generate('StoryBundle_homepage'));
+            return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
         }
         
         $email = $userWithEmail->getEmail();
@@ -274,6 +273,8 @@ class SocialConnectController extends Controller
             $emailSocial = $socialUid . '@odnoklassniki.ru';
         } else if ($social == 'vk') {
             $emailSocial = $socialUid . '@vk.com';
+        } else if ($social == 'fb') {
+            $emailSocial = $socialUid . '@Facebook.com';
         }
         
         $userSocial = $userManager->findUserBy(array($social . 'Uid' => $socialUid, 'email' => $emailSocial));
@@ -283,6 +284,8 @@ class SocialConnectController extends Controller
                     $userWithEmail->setOkUid($socialUid);
                 } else if ($social == 'vk') {
                     $userWithEmail->setVkUid($socialUid);
+                } else if ($social == 'fb') {
+                    $userWithEmail->setFbUid($socialUid);
                 }
 
                 $userWithEmail->setConfirmationToken(null);
