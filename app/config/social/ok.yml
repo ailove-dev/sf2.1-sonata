@@ -7,7 +7,7 @@ ok:
     app_public_key: %OK_PUBLIC_KEY%
 #    access_token_url: 'http://api.odnoklassniki.ru/oauth/token.do'
 #    dialog_url: 'http://www.odnoklassniki.ru/oauth/authorize'
-    redirect_uri: %OK_REDIRECT_URI%
+    redirect_route: _ok_security_check
 #    scope: 'VALUABLE ACCESS'
 #    oauth_proxy_class: Ailove\OKBundle\Service\OKOauthSessionProxy
 #    sdk_file: %kernel.root_dir%/../src/ok-php-sdk/classes/OkPhpSdk.php

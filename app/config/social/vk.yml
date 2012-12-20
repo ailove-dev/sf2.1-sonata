@@ -5,5 +5,4 @@ vk:
     app_id: %VK_APP_ID%
     app_secret: %VK_APP_SECRET%
 #    redirect_uri: %VK_REDIRECT_URI%
-    scope: 'friends,groups'
     redirect_route: _vk_security_check

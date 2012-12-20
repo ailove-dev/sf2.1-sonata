@@ -67,7 +67,7 @@ class AppKernel extends Kernel
             new Ailove\OKBundle\OKBundle(),
             new Ailove\VKBundle\VKBundle(),
             new Ailove\VKApiHelperBundle\VKApiHelperBundle(),
-            new \Ailove\FacebookBundle\AiloveFacebookBundle(),
+            new Ailove\FacebookBundle\AiloveFacebookBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
