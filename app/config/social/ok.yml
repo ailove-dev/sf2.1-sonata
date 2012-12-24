@@ -5,9 +5,8 @@ ok:
     app_id: %OK_APP_ID%
     app_secret: %OK_APP_SECRET%
     app_public_key: %OK_PUBLIC_KEY%
-#    access_token_url: 'http://api.odnoklassniki.ru/oauth/token.do'
-#    dialog_url: 'http://www.odnoklassniki.ru/oauth/authorize'
     redirect_route: _ok_security_check
-#    scope: 'VALUABLE ACCESS'
-#    oauth_proxy_class: Ailove\OKBundle\Service\OKOauthSessionProxy
-#    sdk_file: %kernel.root_dir%/../src/ok-php-sdk/classes/OkPhpSdk.php
+    developer_apps:
+      sf-2.1-build.lo:
+        app_id: 123
+        app_secret: secret

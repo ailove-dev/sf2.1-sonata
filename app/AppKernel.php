@@ -59,8 +59,8 @@ class AppKernel extends Kernel
             // SONATA ADMIN THEME
             new Application\Sonata\AdminThemeBundle\AdminThemeBundle(),
 
-            //FACEBOOK
-            new \FOS\FacebookBundle\FOSFacebookBundle(),
+//            FACEBOOK
+//            new \FOS\FacebookBundle\FOSFacebookBundle(),
 
             // AILOVE
             new Ailove\HelloBundle\HelloBundle(),

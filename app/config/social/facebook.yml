@@ -1,5 +1,4 @@
-fos_facebook:
-    app_id: %FB_APP_ID%
-    secret: %FB_APP_SECRET%
 ailove_facebook:
-    redirect_route: _security_check
+    app_id: %FB_APP_ID%
+    app_secret: %FB_APP_SECRET%
+    redirect_route: _fb_security_check

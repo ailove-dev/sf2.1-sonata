@@ -62,3 +62,14 @@ _sonata_admin:
 soanata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
+
+ok_bundle:
+    resource: '@OKBundle/Resources/config/routing.yml'
+    prefix: /ok
+vk_bundle:
+    resource: '@VKBundle/Resources/config/routing.yml'
+    prefix: /vk
+
+fb_bundle:
+    resource: '@AiloveFacebookBundle/Resources/config/routing.yml'
+    prefix: /fb

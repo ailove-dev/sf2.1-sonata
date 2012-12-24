@@ -62,7 +62,8 @@
         "ailove-dev/vk-bundle": "dev-master",
         "ailove-dev/ok-bundle": "dev-master",
         "ailove-dev/vk-api-helper-bundle": "dev-master",
-        "ailove-dev/facebook-bundle": "*"
+        "ailove-dev/facebook-bundle": "*",
+        "ailove-dev/abstract-social-bundle": "*"
     },
     
     "scripts": {

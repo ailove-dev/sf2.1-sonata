@@ -311,60 +311,6 @@ class SocialConnectController extends Controller
         return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
     }
 
-    public function connectFbAction()
-    {
-
-        /**
-         * @var \FOS\FacebookBundle\Facebook\FacebookSessionPersistence $fbApi
-         */
-        $fbApi = $this->get('fos_facebook.api');
-
-        return new \Symfony\Component\HttpFoundation\RedirectResponse($fbApi->getLoginUrl(array('redirect_uri' => $this->generateUrl('_fb_security_check', array(), true))));
-    }
-
-    /**
-     * Connect
-     *
-     * @return RedirectResponse
-     */
-    public function connectVkAction()
-    {
-//xdebug_start_trace('/tmp/vk_get_access_token/'.date("Ymd-His"));
-        $vkOAuthProxy = $this->get('vk.oauth.proxy');
-        $isAuthorizedByVk = $vkOAuthProxy->authorize();
-
-        if ($isAuthorizedByVk instanceof RedirectResponse) {
-            // Redirect to /login_check
-            $redirectResponse = $isAuthorizedByVk;
-        } else {
-            // Redirect to /login_check
-            $redirectResponse = new RedirectResponse($this->generateUrl('_vk_security_check'));
-        }
-
-        return $redirectResponse;
-    }
-
-    /**
-     * Connect
-     *
-     * @return RedirectResponse
-     */
-    public function connectOkAction()
-    {
-        $okOAuthProxy = $this->get('ok.oauth.proxy');
-        $isAuthorizedByOk = $okOAuthProxy->authorize();
-
-        if ($isAuthorizedByOk instanceof RedirectResponse) {
-            // Redirect to /login_check
-            $redirectResponse = $isAuthorizedByOk;
-        } else {
-            // Redirect to /login_check
-            $redirectResponse = new RedirectResponse($this->generateUrl('_ok_security_check'));
-        }
-
-        return $redirectResponse;
-    }
-    
     /**
      * Get connect type by token.
      *
