@@ -64,6 +64,7 @@ class AppKernel extends Kernel
 
             // AILOVE
             new Ailove\HelloBundle\HelloBundle(),
+            new \Ailove\AbstractSocialBundle\AbstractSocialBundle(),
             new Ailove\OKBundle\OKBundle(),
             new Ailove\VKBundle\VKBundle(),
             new Ailove\VKApiHelperBundle\VKApiHelperBundle(),

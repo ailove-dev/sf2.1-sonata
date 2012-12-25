@@ -19,7 +19,7 @@ security:
         chain_provider:
             chain:
 #                providers: [ fos_userbundle, vk_provider, ok_provider]
-                providers: [  fos_userbundle, vk_provider, ok_provider, fb_provider]
+                providers: [  fos_userbundle, vk_provider, fb_provider, ok_provider]
         fos_userbundle:
             id: fos_user.user_provider.username_email
         vk_provider:
@@ -56,6 +56,7 @@ security:
         # This firewall is used to handle the public login area
         # This part is handled by the FOS User Bundle
         main:
+            pattern: ^/
 #            form_login:
 #                login_path: /user/login
 #                check_path: /user/login_check
@@ -63,11 +64,20 @@ security:
 #                provider: fos_userbundle
 #                success_handler: firstlove.security.authentication_handler
 #                failure_handler: firstlove.security.authentication_handler
+            fb_firewall:
+                check_path: /fb/login_check/
+                login_path: /fb/login/
+                use_forward: false
+                failure_path: /fail
+                always_use_default_target_path: true
+                default_target_path: /user/connect/
+                provider: chain_provider
             vk_firewall:
                 check_path: /vk/login_check/
                 login_path: /vk/login/
                 use_forward: false
                 failure_path: /
+                always_use_default_target_path: true
                 default_target_path: /user/connect/
                 provider: chain_provider
             ok_firewall:
@@ -75,14 +85,8 @@ security:
                 login_path: /ok/login/
                 use_forward: false
                 failure_path: /
+                always_use_default_target_path: true
                 default_target_path: /user/connect/
-                provider: chain_provider
-            fb_firewall:
-                check_path: /fb/login_check/
-                login_path: /fb/login/
-                use_forward: false
-                failure_path: /fail
-                default_target_path: /user/connect
                 provider: chain_provider
             anonymous:    true
             logout:
@@ -110,7 +114,6 @@ security:
         - { path: ^/user/connect, role: [ROLE_VK_USER, ROLE_OK_USER, ROLE_FACEBOOK_USER]}
 
         # Anonymous access for login/register/password reset
-        - { path: ^/fb/login/, role: [ROLE_FACEBOOK_USER] }
         - { path: ^/user/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }

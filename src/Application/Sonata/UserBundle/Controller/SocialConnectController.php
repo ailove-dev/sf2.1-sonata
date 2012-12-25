@@ -16,8 +16,11 @@ use Buzz\Browser;
 
 use Ailove\VKBundle\Security\Authentication\Token\VKUserToken;
 use Ailove\OKBundle\Security\Authentication\Token\OKUserToken;
+use Ailove\FacebookBundle\Security\Authentication\Token\FBUserToken;
 
 use Monolog\Logger;
+
+use Ailove\AbstractSocialBundle\Classes\SocialToken;
 
 use FOS\FacebookBundle\Security\Authentication\Token\FacebookUserToken;
 
@@ -55,13 +58,31 @@ class SocialConnectController extends Controller
 
             $log->addInfo('[end] Update user with ROLE_REGISTERED and redirect to form');
 
-            return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
+            $referer = $this->container->get('router')->generate('HelloBundle_homepage');
+
+
+            // if we have a referer then redirecting back
+            if (!empty($_COOKIE['_social_entry_point_referer'])) {
+
+                $referer = $_COOKIE['_social_entry_point_referer'];
+
+                //resetting cookie
+                setcookie('_social_entry_point_referer');
+
+            }
+
+            return $this->redirect($referer);
         }
         
         /**
          * Get User from security context
          */
         $user = $securityContext->getToken()->getUser();
+
+        if (!is_object($user)) {
+            //todo: create user
+            $this->createUser();
+        }
 
         $form = $this->createForm(new SocialConnectFormType());
 
@@ -177,7 +198,7 @@ class SocialConnectController extends Controller
         //if ($this->getRequest()->isXmlHttpRequest()) {
             $securityContext = $this->container->get('security.context');
 
-            if ($securityContext->getToken()->isAuthenticated()) {
+            if ($securityContext->getToken()->isAuthenticated() && $securityContext->getToken() instanceof SocialToken) {
                 /**
                  * @var User $user
                  */
@@ -196,9 +217,12 @@ class SocialConnectController extends Controller
                         $socialUid = $user->getFacebookUid();
                         $social = 'facebook';
                         break;
+                    default:
+                        throw new \RuntimeException('This is user is not supported');
                 }
 
                 $userWithEmailExists =  $this->getUserManager()->findUserByEmail($email);
+
                 if (null === $userWithEmailExists) {
                     return $this->redirect($this->container->get('router')->generate('StoryBundle_homepage'));
                 }
@@ -211,10 +235,9 @@ class SocialConnectController extends Controller
                 }
 
                 $userManager = $this->getUserManager();
-                $userManager->updateUser($user);
+//                $userManager->updateUser($user);
                 $userManager->updateUser($userWithEmailExists);
 
-                
                 $securityContext->setToken(null);
 
                 $params = array(
@@ -238,7 +261,7 @@ class SocialConnectController extends Controller
                 }
             }
         //}
-        
+
         return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
     }
 
@@ -264,24 +287,38 @@ class SocialConnectController extends Controller
         }
         
         $email = $userWithEmail->getEmail();
-        $emailSocial = $email;
-        if ($social == 'ok') {
-            $emailSocial = $socialUid . '@odnoklassniki.ru';
-        } else if ($social == 'vk') {
-            $emailSocial = $socialUid . '@vk.com';
-        } else if ($social == 'facebook') {
-            $emailSocial = $socialUid . '@facebook.com';
+
+        switch ($social) {
+            case 'ok':
+                $emailSocial = $socialUid . '@odnoklassniki.ru';
+                break;
+            case 'vk':
+                $emailSocial = $socialUid . '@vk.com';
+                break;
+            case 'facebook':
+                $emailSocial = $socialUid . '@facebook.com';
+                break;
+            default:
+                throw new \RuntimeException('unsupported social network');
+
         }
-        
+
         $userSocial = $userManager->findUserBy(array($social . 'Uid' => $socialUid, 'email' => $emailSocial));
 
         if (null !== $userWithEmail && null !== $userSocial) {
-                if ($social == 'ok') {
-                    $userWithEmail->setOkUid($socialUid);
-                } else if ($social == 'vk') {
-                    $userWithEmail->setVkUid($socialUid);
-                } else if ($social == 'facebook') {
-                    $userWithEmail->setFacebookUid($socialUid);
+                switch ($social) {
+                    case 'ok':
+                        $userWithEmail->setOkUid($socialUid);
+                        break;
+                    case 'vk':
+                        $userWithEmail->setVkUid($socialUid);
+                        break;
+                    case 'facebook':
+                        $userWithEmail->setFacebookUid($socialUid);
+                        break;
+                    default:
+                        throw new \RuntimeException('unsupported social network');
+
                 }
 
                 $userWithEmail->setConfirmationToken(null);
@@ -327,7 +364,7 @@ class SocialConnectController extends Controller
             $social = static::CONNECT_TYPE_VK;
         } elseif ($token instanceof OKUserToken) {
             $social = static::CONNECT_TYPE_OK;
-        } elseif ($token instanceof FacebookUserToken) {
+        } elseif ($token instanceof FBUserToken) {
             $social = static::CONNECT_TYPE_FB;
         }
 
@@ -338,10 +375,12 @@ class SocialConnectController extends Controller
 
         $log->addInfo('FB uid: ' . $user->getFacebookUid() . '. Type FB');
 
+
         /**
          * @var \FOS\FacebookBundle\Facebook\FacebookSessionPersistence $fbApi
          */
-        $fbApi = $this->get('fos_facebook.api');
+        $fbApi = $this->get('fb.oauth.proxy')->getSdk();
+
 
         $fbData = $fbApi->api('me?fields=picture,last_name,first_name,name');
         if (!empty($fbData['id'])) {
@@ -410,10 +449,10 @@ class SocialConnectController extends Controller
             $log->addInfo('VK uid: ' . $vkId . '. Update main user info');
 
             // Photo
-            if (null === $user->getPhoto()) {
+//            if (null === $user->getPhoto()) {
                 $this->addAvatar($user, $info['photo_medium']);
                 $log->addInfo('VK uid: ' . $vkId . '. Add user avatar');
-            }
+//            }
 
             // Friends
             if (is_array($friends)) {
@@ -564,7 +603,7 @@ class SocialConnectController extends Controller
 
             return true;
         } catch (\Exception $e) {
-//            die('Error handling avatar' . $e->getMessage());
+            die('Error handling avatar' . $e->getMessage());
 //            $log = $this->get('monolog.user_connect');
             /**
              * @var \Monolog\Logger $log
@@ -593,7 +632,7 @@ class SocialConnectController extends Controller
                     ->setFrom(array('no-reply@gmail.com' => 'no-reply'))
                     ->setTo(array($params['email']))
                     ->setBody($this->renderView($template, $params), 'text/html');
-        
+
         if(!$mailer->send($message)){
                 $mailer->getTransport()->stop();
 
@@ -627,14 +666,9 @@ class SocialConnectController extends Controller
     {
         $token = $this->container->get('security.context')->getToken();
 
-        if ($token instanceof VKUserToken || $token instanceof OKUserToken) {
+        if ($token instanceof VKUserToken || $token instanceof OKUserToken || $token instanceof FBUserToken) {
             $tokenClass = get_class($token);
             $newToken = new $tokenClass($user, $roles);
-        } elseif ($token instanceof FacebookUserToken) {
-            /**
-             * @var FacebookUserToken $token
-             */
-            $newToken = new FacebookUserToken($token->getProviderKey(), $user, $roles);
         } else {
             throw new \Symfony\Component\Security\Core\Exception\UnsupportedUserException('User with provided token doesn\'t supported');
         }
@@ -649,5 +683,43 @@ class SocialConnectController extends Controller
         }
         
         return $this->userManager;
+    }
+
+    protected function createUser()
+    {
+        $token = $this->container->get('security.context')->getToken();
+
+        $uid = (string)$token->getUser();
+
+        $user = new User();
+        $user->setEnabled(true); // Temporary enable user - to access connect page
+        $user->setPassword('');
+        $user->setUsername($uid);
+
+        switch ($this->getSocialConnectType()) {
+            case self::CONNECT_TYPE_VK:
+                $user->setEmail($uid. '@vk.com');
+                $user->setVkUid($uid);
+                $user->addRole(User::ROLE_VK_USER);
+                break;
+            case self::CONNECT_TYPE_FB:
+                $user->setEmail($uid. '@facebook.com');
+                $user->setFacebookUid($uid);
+                $user->addRole(User::ROLE_FACEBOOK_USER);
+                break;
+            case self::CONNECT_TYPE_OK:
+                $user->setEmail($uid. '@odnoklassniki.ru');
+                $user->setVkUid($uid);
+                $user->addRole(User::ROLE_OK_USER);
+                break;
+            default:
+                throw new \RuntimeException('Unsupported user token. Can not create user');
+
+        }
+
+        $this->getUserManager()->updateUser($user);
+
+        $this->refreshToken($user);
+
     }
 }

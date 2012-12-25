@@ -1,9 +1,6 @@
 login_check:
     pattern: /user/login_check/
     defaults: { _controller: 'ApplicationSonataUserBundle:Security:check' }
-#_social_connect_password:
-#    pattern: /user/connect/password/
-#    defaults: { _controller: 'ApplicationSonataUserBundle:SocialConnect:passwordCheck' }
 _social_send_confirm_email:
     pattern: /user/social/confirm/send/{email}/{social}
     defaults: { _controller: 'ApplicationSonataUserBundle:SocialConnect:sendSocialBindEmail' }
@@ -13,21 +10,3 @@ _social_confirm_bind:
 _social_connect:
     pattern: /user/connect/
     defaults: { _controller: 'ApplicationSonataUserBundle:SocialConnect:connect' }
-#_vk_security_check:
-#    pattern: /vk/login_check/
-#    defaults: { _controller: 'ApplicationSonataUserBundle:Security:check' }
-#_vkontakte_login:
-#    pattern: /vk/login/
-#    defaults: { _controller: 'ApplicationSonataUserBundle:SocialConnect:connectVk' }
-#_ok_security_check:
-#    pattern: /ok/login_check/
-#    defaults: { _controller: 'FOSUserBundle:FOSUserSecurity:check' }
-#_ok_login:
-#    pattern: /ok/login/
-#    defaults: { _controller: 'ApplicationSonataUserBundle:SocialConnect:connectOk' }
-#_fb_security_check:
-#    pattern: /fb/login_check/
-#    defaults: { _controller: 'ApplicationSonataUserBundle:Security:check' }
-#_fb_login:
-#    pattern: /fb/login/
-#    defaults: { _controller: 'ApplicationSonataUserBundle:SocialConnect:connectFb' }
