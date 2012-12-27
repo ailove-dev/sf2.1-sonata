@@ -4,14 +4,25 @@ namespace Application\Sonata\UserBundle\Security;
 
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use FOS\UserBundle\Security\InteractiveLoginListener as BaseListener;
 use DateTime;
+use FOS\UserBundle\Model\UserManagerInterface;
 
 /**
  * Interactive login listener class.
  */
-class InteractiveLoginListener extends BaseListener
+class InteractiveLoginListener
 {
+    /**
+     * @var UserManagerInterface
+     */
+    protected $userManager;
+
+    function __construct(UserManagerInterface $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
+
     /**
      * On security interactive login listener action.
      *

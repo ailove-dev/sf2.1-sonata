@@ -2,7 +2,7 @@
 
 namespace Application\Sonata\UserBundle\Entity\Manager;
 
-use FOS\UserBundle\Entity\UserManager as BaseUserManager;
+use FOS\UserBundle\Model\UserManager as BaseUserManager;
 use FOS\UserBundle\Model\UserInterface as FOSUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -165,6 +165,64 @@ class UserManager extends BaseUserManager
     }
 
     /**
+     * Deletes a user.
+     *
+     * @param FOSUserInterface $user
+     *
+     * @return void
+     */
+    public function deleteUser(FOSUserInterface $user)
+    {
+        $this->getEntityManager()->remove($user);
+    }
+
+    /**
+     * Finds one user by the given criteria.
+     *
+     * @param array $criteria
+     *
+     * @return UserInterface
+     */
+    public function findUserBy(array $criteria)
+    {
+        return $this->getRepository()->findOneBy($criteria);
+    }
+
+    /**
+     * Returns a collection with all user instances.
+     *
+     * @return \Traversable
+     */
+    public function findUsers()
+    {
+        return $this->getRepository()->findAll();
+    }
+
+    /**
+     * Returns the user's fully qualified class name.
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        // TODO: Implement getClass() method.
+        return $this->serviceContainer->getParameter('fos_user.user.class');
+    }
+
+    /**
+     * Reloads a user.
+     *
+     * @param FOSUserInterface $user
+     *
+     * @return void
+     */
+    public function reloadUser(FOSUserInterface $user)
+    {
+        // TODO: Implement reloadUser() method.
+        return $this->refreshUser($user);
+    }
+
+    /**
      * Whether this provider supports the given user class
      *
      * @param string $class Classname
@@ -174,5 +232,21 @@ class UserManager extends BaseUserManager
     public function supportsClass($class)
     {
         return $class === $this->getClass();
+    }
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    public function getRepository()
+    {
+        return $this->getEntityManager()->getRepository($this->getClass());
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->serviceContainer->get('doctrine')->getManager();
     }
 }

@@ -1,24 +1,26 @@
-# 
+parameters:
+  fos_user.user.class: Application\Sonata\UserBundle\Entity\User
+#
 # more information can be found here http://sonata-project.org/bundles/user
 #
 fos_user:
     db_driver:      orm # can be orm or odm
     firewall_name:  main
-    user_class:     Application\Sonata\UserBundle\Entity\User
+    user_class:     %fos_user.user.class%
 
     group:
         group_class: Application\Sonata\UserBundle\Entity\Group
-    registration:
-        confirmation:
-            from_email:
-                address: reallove.videomore@gmail.com
-                sender_name: Настоящая любовь
-            enabled: true
-            template: ApplicationSonataUserBundle:Registration:email.txt.twig
-        form:
-            type: firstlove_registration_form_type
-            handler: firstlove.registration_form_handler
-            validation_groups: [FirstloveRegistration]
+#    registration:
+#        confirmation:
+#            from_email:
+#                address: reallove.videomore@gmail.com
+#                sender_name: Настоящая любовь
+#            enabled: true
+#            template: ApplicationSonataUserBundle:Registration:email.txt.twig
+#        form:
+#            type: firstlove_registration_form_type
+##            handler: firstlove.registration_form_handler
+#            validation_groups: [FirstloveRegistration]
 #    resetting:
 #        token_ttl: 86400
 #        email:

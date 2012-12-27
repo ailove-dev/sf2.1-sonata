@@ -80,7 +80,6 @@ class SocialConnectController extends Controller
         $user = $securityContext->getToken()->getUser();
 
         if (!is_object($user)) {
-            //todo: create user
             $this->createUser();
         }
 
@@ -220,6 +219,7 @@ class SocialConnectController extends Controller
                     default:
                         throw new \RuntimeException('This is user is not supported');
                 }
+
 
                 $userWithEmailExists =  $this->getUserManager()->findUserByEmail($email);
 
@@ -391,9 +391,11 @@ class SocialConnectController extends Controller
 
             $log->addInfo('FB uid: ' . $fbApi->getUser() . '. Add user avatar');
 
-            if (!empty($fbData['picture']['data']['url'])) {
-                if (!$this->addAvatar($user, $fbData['picture']['data']['url'])) {
-                    $log->addInfo('FB uid: ' . $fbApi->getUser() . ' failed to add avatar');
+            if (null === $user->getPhoto()) {
+                if (!empty($fbData['picture']['data']['url'])) {
+                    if (!$this->addAvatar($user, $fbData['picture']['data']['url'])) {
+                        $log->addInfo('FB uid: ' . $fbApi->getUser() . ' failed to add avatar');
+                    }
                 }
             }
         }
@@ -449,10 +451,10 @@ class SocialConnectController extends Controller
             $log->addInfo('VK uid: ' . $vkId . '. Update main user info');
 
             // Photo
-//            if (null === $user->getPhoto()) {
+            if (null === $user->getPhoto()) {
                 $this->addAvatar($user, $info['photo_medium']);
                 $log->addInfo('VK uid: ' . $vkId . '. Add user avatar');
-//            }
+            }
 
             // Friends
             if (is_array($friends)) {
@@ -554,12 +556,11 @@ class SocialConnectController extends Controller
     }
 
     /**
-     * Add avatar.
-     *
-     * @param User $user     User instance
-     * @param string $imageUrl Image url
+     * @param User $user
+     * @param string $imageUrl
+     * @return bool
      */
-    protected function addAvatar($user, $imageUrl)
+    protected function addAvatar(User $user, $imageUrl)
     {
         try {
 //            var_dump($user->getPhoto());die;
@@ -574,6 +575,7 @@ class SocialConnectController extends Controller
 
                 $file = realpath('../../../') . $imageProvider->generatePublicUrl($media, 'reference');
                 $preview = realpath('../../../') . $imageProvider->generatePublicUrl($media, 'avatar_profile_block');
+
                 if (file_exists($file)) {
                     @unlink($file);
                     @unlink($preview);
@@ -709,7 +711,7 @@ class SocialConnectController extends Controller
                 break;
             case self::CONNECT_TYPE_OK:
                 $user->setEmail($uid. '@odnoklassniki.ru');
-                $user->setVkUid($uid);
+                $user->setOkUid($uid);
                 $user->addRole(User::ROLE_OK_USER);
                 break;
             default:
