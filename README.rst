@@ -56,10 +56,11 @@ Let's guess you have project named "project". To create project run the followin
     git clone https://github.com/ailove-dev/sf2.1-sonata.git repo/dev
     cd repo/dev
     rm -rf .git
-    php bin/vendors install
     git init
-    git add .
+    git add .gitignore *
     git commit -m "Initial commit"
+    curl -s http://getcomposer.org/installer | php
+    php composer.phar install
 
 About directories structure
 ~~~~~~~~~~~~~~~~~~~~~~~
