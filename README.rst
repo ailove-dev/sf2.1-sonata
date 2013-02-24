@@ -51,6 +51,7 @@ Let's guess you have project named "project". To create project run the followin
     cd project
     mkdir cache conf data repo tmp logs
     echo -e "DB_HOST = 127.0.0.1\nDB_NAME = sf21sonata\nDB_USER = user\nDB_PASSWORD = " > conf/database
+    echo -e "ok_app_id=1\nok_app_secret=1\nok_public_key=1\nvk_app_id=1\nvk_app_secret=1\nfb_app_id=1\nfb_app_secret=1" > conf/social
     chmod 777 *
     git clone https://github.com/ailove-dev/sf2.1-sonata.git repo/dev
     cd repo/dev
