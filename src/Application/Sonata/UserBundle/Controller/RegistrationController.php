@@ -9,15 +9,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 use FOS\UserBundle\Controller\RegistrationController as FOSUserRegistrationController;
+use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Event\FormEvent;
+use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\Event\UserEvent;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
 
 use Application\Sonata\UserBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller managing the registration
  */
 class RegistrationController extends FOSUserRegistrationController
 {
-     public function registerAction($popup = false)
+     public function registerAction(Request $request)
      {
         $securityContext = $this->container->get('security.context');
         if ($securityContext->isGranted(User::ROLE_REGISTERED)) {
@@ -58,7 +64,7 @@ class RegistrationController extends FOSUserRegistrationController
             } 
         }
 
-        $template = true === $popup ? 'FOSUserBundle:Registration:registerPopup.html.'.$this->getEngine() : 'FOSUserBundle:Registration:register.html.'.$this->getEngine();
+        $template = 'FOSUserBundle:Registration:register.html.'.$this->getEngine();
 
         return $this->container->get('templating')->renderResponse($template, array(
             'form' => $form->createView(),
@@ -74,13 +80,15 @@ class RegistrationController extends FOSUserRegistrationController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function confirmAction($token)
+    public function confirmAction(Request $request, $token)
     {
         $user = $this->container->get('fos_user.user_manager')->findUserByConfirmationToken($token);
 
         if (null === $user) {
             throw new NotFoundHttpException(sprintf('Регистрационный токен "%s" не найден', $token));
         }
+
+        $dispatcher = $this->container->get('event_dispatcher');
 
         $user->setConfirmationToken(null);
         $user->setExpiresAtNull();
@@ -90,11 +98,17 @@ class RegistrationController extends FOSUserRegistrationController
         // Set ROLE_REGISTERED role
         $user->addRole(User::ROLE_REGISTERED);
 
-        $this->container->get('fos_user.user_manager')->updateUser($user);
-        $this->container->get('session')->setFlash('notice', 'Регистрация успешно подтверждена. Вы были автоматически авторизованы.');
+        $event = new GetResponseUserEvent($user, $request);
 
-        $response = new RedirectResponse($this->container->get('router')->generate('fos_user_registration_confirmed'));
-        $this->authenticateUser($user, $response);
+        $this->container->get('fos_user.user_manager')->updateUser($user);
+        //$this->container->get('session')->setFlash('notice', 'Регистрация успешно подтверждена. Вы были автоматически авторизованы.');
+
+        if (null === $response = $event->getResponse()) {
+            $url = $this->container->get('router')->generate('fos_user_registration_confirmed');
+            $response = new RedirectResponse($url);
+        }
+
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRMED, new FilterUserResponseEvent($user, $request, $response));
 
         return $response;
     }

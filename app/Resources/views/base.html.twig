@@ -5,6 +5,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        <link href="/twitter-bootstrap/css/bootstrap.css" rel="stylesheet"> 
         {% block javascripts_head %}{% endblock %}
     </head>
     <body>
@@ -20,12 +21,27 @@
                      </div>
                  </div>
             {% else %}
-                <a href="{{ path('_vk_login') }}">VK</a> | <a href="{{ path('_ok_login') }}">OK</a> | <a href="{{ path('_fb_login') }}">FB</a>
+                <a href="#authModal" role="button" class="btn" data-toggle="modal">Login</a>
+                <div id="authModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="authModalLabel">Login using social network account</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p><a href="{{ path('_vk_login') }}">VK</a> | <a href="{{ path('_ok_login') }}">OK</a> | <a href="{{ path('_fb_login') }}">FB</a></p>
+                    </div> 
+                </div>
+                </script>
             {% endif %}
         {% endblock %}
 
         {% block body %}{% endblock %}
         {% block content %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="http://code.jquery.com/jquery-latest.js"></script>
+            <script src="http://malsup.github.com/jquery.form.js"></script>
+            <script src="/twitter-bootstrap/js/bootstrap-modal.js"></script>
+            <script src="/js/social-email.js"></script>
+        {% endblock %}
     </body>
 </html>

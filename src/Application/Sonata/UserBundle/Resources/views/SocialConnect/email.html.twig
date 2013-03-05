@@ -1,18 +1,62 @@
 {% extends '::base.html.twig' %}
 
+{% block user_profile %}{% endblock %}
+
 {% block body %}
-<div id="emailPopup" class="popup_type1">
-    <div class="popup_socialauth">
-        <p class="popup_socialauth_intro">Для завершения регистрации введите email</p>
-        <form id="email_add" method="post" action="{{ path('_social_connect') }}" {{ form_enctype(form) }} novalidate="novalidate">
-            <div>
-                {{ form_widget(form.email) }}
-            </div>
+<div id="emailModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h3 id="emailModalLabel">Enter email address to complete registration</h3>
+    </div>
+    <div class="modal-body">
+        <form id="email_add" class="form-inline" method="post" action="{{ path('_social_connect') }}" {{ form_enctype(form) }} novalidate="novalidate">
+            {{ form_widget(form.email) }}
             {{ form_rest(form) }}
-            <div>
-                <input id="email_submit" type="submit" value="OK" />
-            </div>
+            <input id="email_submit" type="submit" class="btn" value="OK" />
         </form>
+    </div> 
+</div>
+<div id="confirmEmailModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="confirmEmailModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h3 id="confirmEmailModalLabel">Confirm email</h3>
+    </div>
+    <div class="modal-body">
+        <p>Подтвердите свой адрес электронной почты в течении 10 дней или<br/>ваш аккаунт будет заблокирован.<br/><br/>Для этого необходимо перейти по ссылке, высланной вам в письме.</p>
+        <p>Перейти на <a href="{{ path('HelloBundle_homepage') }}">главную страницу</a>.</p>
     </div>
 </div>
+<div id="emailNotUniqModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="confirmEmailModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h3 id="confirmEmailModalLabel">Авторизация через социальную сеть</h3>
+    </div>
+    <div class="modal-body">
+        <p>В нашей системе есть пользователь с таким e-mail.</p>
+        <p id="email_provided_label" style="color:red"></p>
+        <p>
+        <form id="social_send_confirm_email_form" method="post" action="{{ path('_social_send_confirm_email') }}">
+            <input id="email_provided" name="email_provided" type="hidden" value="" />
+            <input id="social_send_confirm_email_submit" type="submit" class="btn" value="Да, это мой аккаунт" />
+        </form>
+        
+        <form id="new_email_form" method="get" action="{{ path('_social_connect') }}">
+            <input id="new_email" type="button" name="new_email" class="btn" value="Указать другой email"  />
+        </from>
+    </div>
+</div>
+<div id="successEmailModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="confirmEmailModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h3 id="confirmEmailModalLabel">Авторизация через социальную сеть</h3>
+    </div>
+    <div class="modal-body">
+        <p>На указанный email было отправлено письмо. Перейдите по ссылке из письма для подтверждения связки аккаунтов.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('#emailModal').modal('show')
+        });
+    </script>
 {% endblock %}

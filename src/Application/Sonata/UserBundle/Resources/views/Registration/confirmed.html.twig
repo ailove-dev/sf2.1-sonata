@@ -9,61 +9,29 @@
 {% endblock %}
 
 {% block body %}
-        <div id="success" class="popup_type1">
-                <div class="popup_closethis"></div>
-                <div class="popup_confirm">
-                        <p class="popup_confirm_intro">Подтверждение регистрации</p>
-                        <p class="popup_confirm_outro">{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
-                        {% if app.session is not empty %}
-                            {% set targetUrl = app.session.get('_security.target_path') %}
-                            {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}
-                        {% endif %}
-                </div>
-
-        </div>	
-{% endblock %}
-
-{% block content %}
-<div class="maincontent auth_before_maincontent">
-        <div class="basic">
-                <div class="auth_before">
-                        <div class="auth_before_intro">
-                                <p class="hh">Настоящая любовь — что мы знаем о ней?</p>
-                                <p class="txt"> Была ли это первая школьная любовь или пришедшая с годами?<br />
-У каждого своя неповторимая история. </p>
-                                <p class="txt">Новый проект «Настоящая любовь», подготовленный для Вас совместно
-ТМ&nbsp;«Любимый» и СТС Медиа – создан для того, чтобы собрать истории о&nbsp;настоящей&nbsp;любви людей разного пола и возраста из разных городов России.<br />А вы чувствовали когда-нибудь настоящую любовь?<br />Расскажите нам об этом!</p>
-                        </div>
-                        <div class="auth_before_columns clearfix">
-                                <div class="auth_before_columns_one floatleft">
-                                        <p>Напишите, что для вас «настоящая любовь». Прикладывайте к своей истории фото и видео</p>
-                                </div>
-                                <div class="auth_before_columns_two floatleft">
-                                        <p>Авторов 50 самых интересных историй продюсеры СТС пригласят на кастинг</p>
-                                </div>
-                                <div class="auth_before_columns_three floatleft">
-                                        <p>Видеоистории будут транслироваться на телеканале СТС и сайте <a href="http://videomore.ru/" target="_blank">videomore.ru</a></p>
-                                </div>
-                        </div>
-                        <div class="auth_before_tell">
-                            {% if is_granted('ROLE_REGISTERED') %}
-                                вы авторизованы
-                            {% else %}
-                                необходимо пройти авторизацию
-                            {% endif %}
-                        </div>
-                        <a style="color: #ffffff; position: absolute; right: 0px; bottom: 15px;" target="_blank" href="/pdf/rules_contest.pdf">Правила конкурса</a>
-                </div>
-        </div>
+<div id="successModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="successModalLabel">Подтверждение регистрации</h3>
+    </div>
+    <div class="modal-body">
+        <p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+        {% if app.session is not empty %}
+            {% set targetUrl = app.session.get('_security.target_path') %}
+            {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}
+        {% endif %}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">OK</button>
+    </div>
 </div>
-{% endblock maincontent %}
-
-
-{% block javascripts_head %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/mainpage.js') }}"></script>
 {% endblock %}
-{% block stylesheets %}
+
+{% block javascripts %}
     {{ parent() }}
-    <link href="{{ asset('css/popup_auth.css') }}" rel="stylesheet" />
+    <script>
+        $(document).ready(function() {
+            $('#successModal').modal('show')
+        });
+    </script>
 {% endblock %}

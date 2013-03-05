@@ -192,9 +192,9 @@ class SocialConnectController extends Controller
      * 
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function sendSocialBindEmailAction($email)
+    public function sendSocialBindEmailAction()
     {
-        //if ($this->getRequest()->isXmlHttpRequest()) {
+        if ($this->getRequest()->isXmlHttpRequest()) {
             $securityContext = $this->container->get('security.context');
 
             if ($securityContext->getToken()->isAuthenticated() && $securityContext->getToken() instanceof SocialToken) {
@@ -220,7 +220,15 @@ class SocialConnectController extends Controller
                         throw new \RuntimeException('This is user is not supported');
                 }
 
-
+                $email = $this->getRequest()->request->get('email_provided');
+                if (null === $email) {
+                    $result = array(
+                            'status' => 'error',
+                            'message' => 'missed email address'
+                        );
+                    return new Response(json_encode($result));
+                }
+        
                 $userWithEmailExists =  $this->getUserManager()->findUserByEmail($email);
 
                 if (null === $userWithEmailExists) {
@@ -260,7 +268,7 @@ class SocialConnectController extends Controller
                     }                              
                 }
             }
-        //}
+        }
 
         return $this->redirect($this->container->get('router')->generate('HelloBundle_homepage'));
     }
@@ -382,7 +390,7 @@ class SocialConnectController extends Controller
         $fbApi = $this->get('fb.oauth.proxy')->getSdk();
 
 
-        $fbData = $fbApi->api('me?fields=picture,last_name,first_name,name');
+        $fbData = $fbApi->api('me?fields=last_name,first_name,name');
         if (!empty($fbData['id'])) {
 
             $user->setFirstname($fbData['first_name']);
@@ -392,10 +400,8 @@ class SocialConnectController extends Controller
             $log->addInfo('FB uid: ' . $fbApi->getUser() . '. Add user avatar');
 
             if (null === $user->getPhoto()) {
-                if (!empty($fbData['picture']['data']['url'])) {
-                    if (!$this->addAvatar($user, $fbData['picture']['data']['url'])) {
-                        $log->addInfo('FB uid: ' . $fbApi->getUser() . ' failed to add avatar');
-                    }
+                if (!$this->addAvatar($user, 'http://graph.facebook.com/'.$fbData['id'].'/picture?return_ssl_resources=0')) {
+                    $log->addInfo('FB uid: ' . $fbApi->getUser() . ' failed to add avatar');
                 }
             }
         }
