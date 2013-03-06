@@ -30,17 +30,14 @@
 
         "knplabs/gaufrette": "dev-master",
 
-        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "sonata-project/block-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "2.1.*",
+        "sonata-project/block-bundle": "2.1.*",
         "sonata-project/user-bundle": "dev-master",
         "sonata-project/intl-bundle": "dev-master",
         "sonata-project/seo-bundle": "dev-master",
-        "sonata-project/doctrine-extensions": "dev-master",
-        "sonata-project/exporter": "dev-master",
-        "sonata-project/media-bundle": "dev-master",
+        "sonata-project/media-bundle": "2.1.*",
         "sonata-project/cache-bundle": "dev-master",
 
-        "friendsofsymfony/user-bundle": "dev-master",
         "friendsofsymfony/rest": "dev-master",
         "friendsofsymfony/rest-bundle": "dev-master",
 
