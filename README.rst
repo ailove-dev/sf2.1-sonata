@@ -110,5 +110,12 @@ Login to Sonata Admin
 
 Open http://project-url.lo/admin/login in your browser and fill the authorization form
 
+Apache config for Liip
+~~~~~~~~~~~~~~~~~~~~~~
+
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} ^/data/
+    RewriteCond /path/to/project/%{SCRIPT_FILENAME} !-s
+    RewriteRule ^/(.*)$ http://%{HTTP_HOST}/app.php/$1 [QSA,L]
 
 Enjoy!
