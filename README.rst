@@ -113,6 +113,8 @@ Open http://project-url.lo/admin/login in your browser and fill the authorizatio
 Apache config for Liip
 ~~~~~~~~~~~~~~~~~~~~~~
 
+Example::
+
     RewriteEngine On
     RewriteCond %{REQUEST_URI} ^/data/
     RewriteCond /path/to/project/%{SCRIPT_FILENAME} !-s
