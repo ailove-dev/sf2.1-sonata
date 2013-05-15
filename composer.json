@@ -30,7 +30,7 @@
 
         "liip/imagine-bundle": "dev-master",
 
-        "knplabs/gaufrette": "0.1.*",
+        "knplabs/gaufrette": "dev-master",
 
         "symfony/http-foundation": "2.1.*",
 
